@@ -1,0 +1,659 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{capt-of}
+\usepackage{todonotes}
+\usepackage{geometry}
+ \geometry{
+   a4paper,
+   total={170mm,257mm},
+   left=15mm,
+   right=15mm,
+   top=15mm,
+ }
+ \hypersetup{
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=blue,        % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,     % color of file links
+    urlcolor=blue
+}
+\usepackage{indentfirst}
+  \setlength{\parindent}{0.5em}
+  \setlength{\parskip}{0.1em}  
+  % spacing: how to read {12pt plus 4pt minus 2pt}
+%           12pt is what we would like the spacing to be
+%           plus 4pt means that TeX can stretch it by at most 4pt
+%           minus 2pt means that TeX can shrink it by at most 2pt
+%       This is one example of the concept of 'glue' in TeX
+\usepackage{titlesec}
+  \titlespacing\section{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+  \titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+  \titlespacing\subsubsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+
+
+
+\title{Applied Machine Learning\\Report on Practice Assignment}
+\author{Team 34}
+%\date{\today}
+\date{Fall Semester 2017}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+%When reporting on your work do not explain the techniques you are using. You do not have space for this. Focus on reporting only on the results you get when you apply these techniques. Do not forget that the report is 10 pages long maximum (single column, 10pt minimum) in PDF format. {\bf Pages beyond the tenth one will be ignored and material in these pages will not be graded.}
+
+\section{Datasets}
+%Describe here your dataset (dimension of data, number of images per class, number of classes, features representatives of each class). Add illustrative images of the elements in your dataset to help the reader understand what each class entails.
+
+The initial dataset was composed of 4 classes with 12 images per class. Figure \ref{fig:class} shows the composition of the different classes, that were chosen based on their varied geometrical and chromatic features: Watches are dark and have a round shape, bananas are long and yellow, chairs have angular features and pens are long and thin. This representative features are summarized in Table \ref{tab::Dataset-characteristics}. 
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[height=2cm]{pictures/banana} 
+        \caption{Banana}
+        \label{fig:banana}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[height=2cm]{pictures/chair2} 
+        \caption{Chair}
+        \label{fig:chair}
+    \end{subfigure} 
+    ~
+    \begin{subfigure}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[height=2cm]{pictures/stylo4} 
+        \caption{Pen}
+        \label{fig:pen}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[height=2cm]{pictures/watch2} 
+        \caption{Watch}
+        \label{fig:watch}
+    \end{subfigure}   
+\caption{Four different classes}
+\label{fig:class}
+\end{figure}
+
+
+The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \cdot 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \cdot 48$ pixels and a number of features of $48\times48\times3$.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|c|l|}
+\hline
+\textbf{Classes} & \textbf{Shape} & \textbf{Colour} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Number \\ of images\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}l@{}}Size\\ in pixels\end{tabular} } \\ \hline
+Banana           & Long 			& Yellow         & 12                                                                                        & $48\cdot 48$                                                      \\ \hline
+Pens             & Long and thin 	& Multicoloured  & 12                                                                                        & $48\cdot 48$                                                      \\ \hline
+Watches          & Round 			& Dark          & 12                                                                                        & $48\cdot 48$                                                      \\ \hline
+Chairs           & Angular			& Light        	& 12                                                                                        & $48\cdot 48$                                                      \\ \hline
+\end{tabular}
+\caption{Dataset characteristics}
+\label{tab::Dataset-characteristics}
+\end{table}
+
+An effort was made to have a linear separable dataset in the beginning for learning purposes. In order to obtain that, the images were purposely chosen to have similar orientations in space.
+For the second part of this report the same dataset was used, but some noisy datapoints were added (4 per class). This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
+
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[width=0.8\textwidth]{pictures/dataset_1}
+      \caption{Pictures in dataset 1}
+      \label{fig:dataset_1}
+    \end{subfigure}%
+    ~
+	\begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_labelized}
+      \caption{Projected datapoints of dataset 1}
+      \label{fig:dataset_1_labelized}
+    \end{subfigure}%
+    ~
+	\begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_new_2}
+      \caption{Projected datapoints of "Hacked" dataset 2}
+      \label{fig:dataset_new_2}
+    \end{subfigure}%
+  \caption{Comparison of the datasets used for the report}
+\end{figure}
+
+
+\section{Dimensionality Reduction}
+% Apply PCA on your dataset and choose the projections that allow you to best separate the classes. Expect to have to use several projections in combination to separate the classes. Keep these projections as you will use the data projected in these dimensions in the other practicals.
+
+
+\begin{figure}[H]
+\centering
+     \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[width=0.8\textwidth]{pictures/eigenvalue_dataset1}
+      \caption{Cumulative eigenvalues}
+      \label{fig:eigenvalue_dataset1}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/eigenvector_1}
+      \caption{First two eigenvectors}
+      \label{fig:eigenvector_1}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[width=4cm]{pictures/eigenvectors}
+      \caption{All eigenvectors}
+      \label{fig:eigenvectors}
+     \end{subfigure}
+     \caption{First PCA}
+     \label{fig:PCA}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[height = 6cm]{pictures/PCA_projections}
+  \caption{PCA projection matrix on eigenvectors 1 to 4}
+  \label{fig:PCA_matrix}
+\end{figure}
+
+PCA was applied to the dataset 1. Figure \ref{fig:eigenvalue_dataset1} shows the cumulative reconstruction error: it can be noticed that 73.9\% of the dataset can be reconstructed with the first 8 eigenvectors. 
+It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as expected: indeed they represent most of the variance of the data. The first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 will separate well the watches class from the rest, while the second one will separate better the banana class from the rest. The two principal eigenvectors are shown in Figure \ref{fig:eigenvector_1} while the first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
+%It can be seen in Figure \ref{fig:eigenvector_1} that the first eigenvector has a strong correlation with the watches class while it is less predominant for the other classes. On the other hand, the second eigenvector has a strong correlation with the apple class and the shape of apples and watches influences the spreads of the two classes in a similar manner. Moreover, these classes are not linearly separable in the other projections (see Figure \ref{fig:PCA_matrix}).
+
+\section{Clustering - qualitative assessment}
+%   A qualitative assessment of the results from applying K-means, Soft K- Means, and DBSCAN in unsupervised mode to your dataset. A quantitative assessment of applying the same methods tested in semi-supervised clustering mode. Specifically, make sure to report i) the values tested for the hyperparameters of the clustering technique, and ii) the ratios across labelled and unlabelled points tested in semi-supervised mode.
+
+% For K-means, try changing the type of metric (Euclidean, Manhattan, Inﬁnite and Polynomial).
+% Note : L1 bad for noise of class 2 (green)
+% Test also the sensitivity to random initialization. 
+% Note : all sensitive to initial position
+
+In order to assess the functionalities of unsupervised clustering methods, the dataset 1 was used (see Figure \ref{fig:dataset_1}). In particular, the algorithms k-Means, Soft k-Means and DBScan were applied.
+
+\subsection{K-means}
+
+The hyperparameters for the K-means method are:
+\begin{itemize}
+\item the number of clusters;
+\item the metric (L1, L2, Linf, Lp).
+\end{itemize}
+
+Since clustering does not look at the label of each point, the separation of data points is done according to the position of the points in the PCA projection. For dataset 1, the classes corresponding to chairs and pens are quite close in the PCA projection (see Figure \ref{fig:dataset_1_labelized}). As such, when the cluster number is smaller than the total number of classes as in Figure \ref{fig:dataset_1_Kmeans-L2-3K}, chairs and pens are left in the same class.
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-L1}
+      \caption{Metric L1}
+      \label{fig:dataset_1_Kmeans-4K-L1}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-L2}
+      \caption{Metric L2}
+      \label{fig:dataset_1_Kmeans-4K-L2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-L3}
+      \caption{Metric Lp with p=3}
+      \label{fig:dataset_1_Kmeans-4K-L3}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-Linf}
+      \caption{Metric Linf}
+      \label{fig:dataset_1_Kmeans-4K-Linf}
+     \end{subfigure}
+     \caption{Dataset 1 with correct K-Means clustering, different metrics and K=4}
+     \label{fig:good_kmeans}
+\end{figure}
+
+In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied for K=4 and different metrics. Although all metrics were able to correctly separate the classes, some errors were typically shown, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
+
+%Bad results
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-L2-wrong}
+      \caption{Metric L2}
+      \label{fig:dataset_1_Kmeans-4K-L2-bad}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-L2-wrong2}
+      \caption{Metric L2}
+      \label{fig:dataset_1_Kmeans-4K-L2-wrong2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-Linf-wrong}
+      \caption{Metric Linf}
+      \label{fig:dataset_1_Kmeans-4K-Linf-wrong}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-4K-Linf-wrong2}
+      \caption{Metric Linf}
+      \label{fig:dataset_1_Kmeans-4K-Linf-wrong2}
+     \end{subfigure}
+     \caption{Dataset 1 with incorrect K-Means clustering, metrics L2 and Linf and K=4}
+     \label{fig:bad_kmeans}
+\end{figure}
+%End bad results
+
+Finally, K-Means behaviour was tested for different values of K (see Figure \ref{fig:kmeans_differentK}). 
+
+%Different values of K
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-3K}
+      \caption{K = 3}
+      \label{fig:dataset_1_Kmeans-L2-3K}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-4K}
+      \caption{K = 4}
+      \label{fig:dataset_1_Kmeans-L2-4K}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-5K}
+      \caption{K = 5}
+      \label{fig:dataset_1_Kmeans-L2-5K}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-6K}
+      \caption{K = 6}
+      \label{fig:dataset_1_Kmeans-L2-6K}
+     \end{subfigure}
+     \caption{Dataset 1 with K-Means clustering, Euclidean metrics and different value of K}
+     \label{fig:kmeans_differentK}
+\end{figure}
+
+
+\subsubsection*{Initialization}
+
+%Different iterations for kmeans
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-3K}
+      \caption{K = 3}
+      \label{fig:dataset_1_Kmeans-L2-3K}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-4K}
+      \caption{K = 4}
+      \label{fig:dataset_1_Kmeans-L2-4K}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-5K}
+      \caption{K = 5}
+      \label{fig:dataset_1_Kmeans-L2-5K}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-6K}
+      \caption{K = 6}
+      \label{fig:dataset_1_Kmeans-L2-6K}
+     \end{subfigure}
+     \caption{Dataset 1 with K-Means clustering, Euclidean metrics and different value of K}
+     \label{fig:kmeans_differentK}
+\end{figure}
+
+\subsection{Soft K-Means}
+
+The hyperparameters for the soft K-means method are:
+\begin{itemize}
+\item the number of clusters;
+\item the stiffness $\beta$.
+\end{itemize}
+
+In Figure \ref{fig:soft_kmeans_varyb}, results for K=4 and different values of $\beta$ are shown. The higher the value of $\beta$, the more similar soft K-Means becomes to hard K-Means. When the stiffness is too low, the classes are difficult to distinguish. From $\beta = 30$, the 4 classes are clearly distinguished and correctly clustered.  
+
+%Different betas
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-4K-beta5}
+      \caption{$\beta = 5$}
+      \label{fig:dataset_1_soft-Kmeans-4K-beta5}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-4K-beta15}
+      \caption{$\beta = 15$}
+      \label{fig:dataset_1_soft-Kmeans-4K-beta15}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-4K-beta30}
+      \caption{$\beta = 30$}
+      \label{fig:dataset_1_soft-Kmeans-4K-beta30}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-4K-beta200}
+      \caption{$\beta = 200$}
+      \label{fig:dataset_1_soft-Kmeans-4K-beta200}
+     \end{subfigure}
+     \caption{Dataset 1 with soft K-Means clustering, K = 4 and different value of $\beta$}
+     \label{fig:soft_kmeans_varyb}
+\end{figure}
+%End different betas
+
+It can be noticed that the results for soft K-Means when varying the K don't differ considerably from what obtained with hard K-Means, as shown in Figure \ref{fig:soft_kmeans_varyk}.
+
+%different Ks
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-3K-beta30}
+      \caption{K=3}
+      \label{fig:dataset_1_soft-Kmeans-3K-beta30}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-4K-beta30-2}
+      \caption{K=4}
+      \label{fig:dataset_1_soft-Kmeans-4K-beta30-2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-5K-beta30}
+      \caption{K=5}
+      \label{fig:dataset_1_soft-Kmeans-5K-beta30}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/dataset_1_soft-Kmeans-6K-beta30}
+      \caption{K=6}
+      \label{fig:dataset_1_soft-Kmeans-6K-beta30}
+     \end{subfigure}
+     \caption{Dataset 1 with soft K-Means clustering,$\beta = 30$ and different values of K}
+     \label{fig:soft_kmeans_varyk}
+\end{figure}
+%End different Ks
+
+
+\subsection{DBSCAN}
+
+The hyperparameters for the DBScan method are:
+\begin{itemize}
+\item the minimum number of points in a cluster MinPts;
+\item the size of neighborhood $\epsilon$.
+\end{itemize}
+
+It can be noticed that when the number of Minpoints increases (see Figure \ref{fig:DBScan_varyminpt}), the smaller clusters are lost, and more and more points are considered outliers as the $\epsilon$ doesn't change.
+
+%DBScan varying MinPts
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-epsilon01-Minpoint-2}
+      \caption{$Minpoints = 2$}
+      \label{fig:DBSCAN-epsilon01-Minpoint-2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-epsilon01-Minpoint-4}
+      \caption{$Minpoints = 4$}
+      \label{fig:DBSCAN-epsilon01-Minpoint-4}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-epsilon01-Minpoint-6}
+      \caption{$Minpoints = 6$}
+      \label{fig:DBSCAN-epsilon01-Minpoint-6}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-epsilon01-Minpoint-10}
+      \caption{$Minpoints = 10$}
+      \label{fig:DBSCAN-epsilon01-Minpoint-10}
+     \end{subfigure}
+     \caption{Dataset 1 with DBSCAN clustering, $\epsilon = 0.1 $ and different value of $Minpoints$}
+     \label{fig:DBScan_varyminpt}
+\end{figure}
+%DBScan varying MinPts
+
+The smaller the $\epsilon$, 
+
+%DBScan varying Eps
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-Minpoint-2-epsilon005}
+      \caption{$\epsilon = 0.05$}
+      \label{fig:DBSCAN-Minpoint-2-epsilon005}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-Minpoint-2-epsilon01}
+      \caption{$\epsilon = 0.1$}
+      \label{fig:DBSCAN-Minpoint-2-epsilon01}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-Minpoint-2-epsilon015}
+      \caption{$\epsilon = 0.15$}
+      \label{fig:DBSCAN-Minpoint-2-epsilon15}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/DBSCAN-Minpoint-2-epsilon02}
+      \caption{$\epsilon = 0.2$}
+      \label{fig:DBSCAN-Minpoint-2-epsilon02}
+     \end{subfigure}
+     \caption{Dataset 1 with DBSCAN clustering, $Minpoints = 2 $ and different value of $\epsilon$}
+\end{figure}
+
+\subsection{Type of metric}
+
+\subsection{Initialization}
+
+
+
+% For K-Means and Soft-K-Means, you could report on the eﬀect of the choice of the hyperparameters, metric and initialization on the position of the centroids, the shape of the regions, the found clusters, etc.
+
+% For DBSCAN, it could refer to the number of clusters found with respect to the hyperparameters, the proportion of points considered as noise, etc.
+
+
+\section{Classification}
+% Report on performances when running the different classifiers.
+% Report on values tested for i) the hyperparameters, ii) the training/testing ratios, iii) number of folds for crossvalidation. Give performance results only for the most interesting choices of hyperparameters, training/testing ratios and number of folds.
+
+% \begin{wrapfigure}{r}{0.3\textwidth}
+% 	\centering
+% 	\includegraphics[width=0.25\textwidth]{pictures/dataset_new_2}
+% 	\caption{Dataset 2}
+%     \label{fig:dataset_new_2}
+% \end{wrapfigure}
+\subsection{Methods comparison}
+
+The purpose of this section is to compare the GMM and SVM method with the "hacked" dataset (i.e. \textbf{Dataset 2}). Several factors can influence the performance of the GMM and C-SVM classification methods. Since there are many factors to take into account, a comparison plan is fixed in figure (\ref{fig:comparison-block-diag}).The first parameters to set are the test/ratio train and the number of folds for crossvalidation because these parameters directly influences the results of classifications of each method.
+
+\textbf{Train/test ratio}\\
+We noticed that if we take a small ratio train/test there is not enough point to train the algorithm.If the ratio is too high, there is not enough test point and the variance becomes too high. A good trade-off is actually the ratio 2/3 training, 1/3 testing.
+
+\textbf{Number of folds sensitivity}\\
+In MLStudio, the crossvalidation method is based on a random separation of the data between Train and test before repeating the classification and averaging the results. With this type of cross validation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, too much fold is not useful because after a while the results do not improve but the cost of calculation increase. A good trade-off for our dataset was 30 folds because it was at this point that the results started to stabilize between several cross validation process.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{pictures/comparison-block-diag}
+	\caption{Comparison method block diagram}
+	\label{fig:comparison-block-diag}
+\end{figure}
+
+
+\subsection{GMM classification}
+For the GMM classification the hyperparameters were found in three stages. First, the K-Means initialization mode is set because it is the mode expected to be more efficient than the random and uniform method. A full covariance matrix is set to allow as much freedom as possible. In the figure \ref{fig:GMM_graph_1} a comparison with the number of components per class based on the F-Measure allows to choose the number of GMMs per class. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{pictures/GMM_graph_1}
+	\caption{GMM: comparison for different number of components per class}
+	\label{fig:GMM_graph_1}
+\end{figure}
+
+This graph shows that only one GMM per class is the most favorable for classifying the dataset. The training set shows better results with more GMMs per class but the classification of the testing set gets worse and the variance is higher.
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.4\textwidth}
+      \centering
+      \includegraphics[width=0.9\textwidth]{pictures/GMM_graph_2}
+      \caption{GMM: comparison for different type of matrix}
+      \label{fig:GMM_graph_2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.4\textwidth}
+      \centering
+      \includegraphics[width=0.9\textwidth]{pictures/GMM_graph_3}
+      \caption{GMM: comparison for different initialization}
+      \label{fig:GMM_graph_3}
+     \end{subfigure}
+\caption{F-measure comparison for different type of matrix and initialization}
+\end{figure}
+
+By following the procedure explained in the block diagram \ref{fig:comparison-block-diag} the plots \ref{fig:GMM_graph_3} allow us to justify our choices. A spherical covariance matrix and a K-Means initialization method are chosen to favor the smallest variance on the training set. Indeed a large variance on the testing set indicates an overfiting problem of the training set.
+
+\subsection{C-SVM classification}
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.4\textwidth}
+      \centering
+      \includegraphics[height=4cm]{pictures/linear-SVM}
+      \caption{Linear C-SVM: comparison for different penalty factor C}
+      \label{fig:linear-SVM}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.4\textwidth}
+      \centering
+      \includegraphics[height=4cm]{pictures/non-linear-SVM}
+      \caption{C-SVM with RBF kernel: comparison for different pairs of hyperparameters}
+      \label{fig:non-linear-SVM}
+     \end{subfigure}
+     \caption{F-measure comparison for different type of matrix and initialization}
+\end{figure}
+\todo{sigma 0.1, 0.01, 0,001 good choice ?}
+
+The only hyperparameter that must be choosen for the linear SVM classification method is the weights the penalty term (i.e. the "C"). The goal is to find the best tradeoff between minimizing the classification errors and maximizing the margin with the helps of the plot \ref{fig:linear-SVM}. To have a lower variance on the testing set classification a C of 32 is chosen. Lower variance is preferable even though the average of the F-Measure is a little smaller to minimize the overfitting of the training set. For the non-linear SVM classification some values of $ \ sigma $ and $ C $ are chosen and all combinations are compared in the figure \ref{fig:non-linear-SVM}.This figure shows that the best combination is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance on training and testing set.
+
+\subsection{C-SVM and GMM comparison}
+
+The SVM method with an RBF kernel is the most appropriate for classifying dataset 2.\\
+\todo{Expliquer un peu plus}
+
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
+      \centering
+      \includegraphics[height=3.2 cm]{pictures/Compare-best-classification-training}
+      \caption{Training set}
+      \label{fig:Compare-best-classification-training}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-SVM}
+      \centering
+      \includegraphics[height=3.2 cm]{pictures/Compare-best-classification-test}
+      \caption{Test set}
+      \label{fig:Compare-best-classification-training}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-C-SVM}
+      \centering
+      \includegraphics[height= 3.2 cm]{pictures/classification-best.png}
+      \caption{C-SVM ($\sigma = 0.1$ and $C=10$)}
+      \label{fig:classification-best}
+     \end{subfigure}
+      ~
+     \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
+\end{figure}
+
+\subsection{Test of sensitivity}
+\begin{figure}[H]
+\centering
+	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
+      \centering
+      \includegraphics[height=3.2 cm]{pictures/train-test-ratio-low-10percent-train-data}
+      \caption{Training set}
+      \label{fig:train-test-ratio-low-10percent-train-data}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-SVM}
+      \centering
+      \includegraphics[height=3.2 cm]{pictures/train-test-ratio-low-10percent-test-data}
+      \caption{Testing set}
+      \label{fig:train-test-ratio-low-10percent-train-data}
+     \end{subfigure}
+      ~
+     \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
+\end{figure}
+
+\subsection{Overall discussion and conclusion}
+
+% Offer an overall appraisal of your work and draw conclusions about the results achieved.
+
+\end{document}
