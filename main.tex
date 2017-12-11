@@ -93,7 +93,7 @@ The initial dataset was composed of 4 classes with 12 images per class. Figure \
 \end{figure}
 
 
-The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \cdot 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \cdot 48$ pixels and a number of features of $48\times48\times3$.
+The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels and a number of features of $48\times48\times3$.
 
 
 \begin{table}[H]
@@ -110,8 +110,8 @@ Chairs           & Angular			& Light        	& 12                               
 \label{tab::Dataset-characteristics}
 \end{table}
 
-An effort was made to have a linear separable dataset in the beginning for learning purposes. In order to obtain that, the images were purposely chosen to have similar orientations in space.
-For the second part of this report the same dataset was used, but some noisy datapoints were added (4 per class). This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
+An effort was made to have a linear separable dataset in the beginning for learning purposes. In order to obtain that, the images for each class were purposely chosen to have similar caracteristics such as shape, color and orientation in space.
+For the second part of this report the same dataset was used, but some noisy datapoints were added by hand in MLDemos (4 per class). This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
 
 \begin{figure}[H]
 \centering
@@ -132,7 +132,7 @@ For the second part of this report the same dataset was used, but some noisy dat
 	\begin{subfigure}[t]{0.3\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/dataset_new_2}
-      \caption{Projected datapoints of "Hacked" dataset 2}
+      \caption{Projected datapoints of dataset 2}
       \label{fig:dataset_new_2}
     \end{subfigure}%
   \caption{Comparison of the datasets used for the report}
@@ -188,17 +188,19 @@ It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was
 % Test also the sensitivity to random initialization. 
 % Note : all sensitive to initial position
 
-In order to assess the functionalities of unsupervised clustering methods, the dataset 1 was used (see Figure \ref{fig:dataset_1}). In particular, the algorithms k-Means, Soft k-Means and DBScan were applied.
+In order to assess the functionalities of unsupervised clustering methods, the dataset 1 was used (see Figure \ref{fig:dataset_1}). In particular, the algorithms K-Means, Soft K-Means and DBScan were applied.
 
 \subsection{K-means}
 
 The hyperparameters for the K-means method are:
 \begin{itemize}
 \item the number of clusters;
-\item the metric (L1, L2, Linf, Lp).
+\item the metric ($L_1$, $L_2$, $L_{\infty}$, $L_p$).
 \end{itemize}
 
-Since clustering does not look at the label of each point, the separation of data points is done according to the position of the points in the PCA projection. For dataset 1, the classes corresponding to chairs and pens are quite close in the PCA projection (see Figure \ref{fig:dataset_1_labelized}). As such, when the cluster number is smaller than the total number of classes as in Figure \ref{fig:dataset_1_Kmeans-L2-3K}, chairs and pens are left in the same class.
+In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated the same edges as the $L_1$ metric. 
+
+Although all metrics were able to correctly separate the classes, some errors were typically shown, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means (see Initialization below) and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
 
 \begin{figure}[H]
 \centering
@@ -233,7 +235,7 @@ Since clustering does not look at the label of each point, the separation of dat
      \label{fig:good_kmeans}
 \end{figure}
 
-In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied for K=4 and different metrics. Although all metrics were able to correctly separate the classes, some errors were typically shown, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
+
 
 %Bad results
 \begin{figure}[H]
@@ -270,7 +272,7 @@ In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied f
 \end{figure}
 %End bad results
 
-Finally, K-Means behaviour was tested for different values of K (see Figure \ref{fig:kmeans_differentK}). 
+Finally, K-Means behaviour was tested for different values of K (see Figure \ref{fig:kmeans_differentK}). Since clustering does not use the label of each point, the separation of datapoints is done according to the position of the points in the PCA projection. For dataset 1, the classes Chairs and Pens are quite close in the PCA projection (see Figure \ref{fig:dataset_1_labelized}). As such, when the cluster number is smaller than the total number of classes as in Figure \ref{fig:dataset_1_Kmeans-L2-3K}, the classes Chairs and Pens are left in the same cluster.
 
 %Different values of K
 \begin{figure}[H]
@@ -392,7 +394,7 @@ It can be noticed that the results for soft K-Means when varying the K don't dif
 
 \subsubsection*{Initialization}
 
-The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show an initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a correct clustering in the end.\ref{}
+The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show an initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a correct clustering starting from iteration 3.
 
 %Different iterations for kmeans
 \begin{figure}[H]
@@ -502,7 +504,8 @@ It can be noticed that when the number of Minpoints increases (see Figure \ref{f
 \end{figure}
 %DBScan varying MinPts
 
-The smaller the $\epsilon$, 
+The value of $\epsilon$ was then varied for a fixed Minpt = 2, as it can be seen in Figure \ref{fig:DBScan_varyeps}.
+For smaller values of $\epsilon$ (as Figure \ref{fig:DBSCAN-Minpoint-2-epsilon005}), the size of the clusters is expectedly smaller, and as the density of the dataset is not uniform, many outliers are present. This method results in  clusters than are not necessarily globular, which is an advantage compared to K-Means for this particular dataset, but it clusters datapoints whose inter-distance is smaller than $\epsilon$. As such, in this particular case, the classes Chairs and Pens can be distinguished only for small values of $\epsilon$, which do not cluster well the other classes as their density is lower. When the value of $\epsilon$ is higher, (i.e. Figure \ref{fig:DBSCAN-Minpoint-2-epsilon02}), the classes Bananas and Watches are correctly clustered but the other two are fused togheter.
 
 %DBScan varying Eps
 \begin{figure}[H]
@@ -535,6 +538,7 @@ The smaller the $\epsilon$,
       \label{fig:DBSCAN-Minpoint-2-epsilon02}
      \end{subfigure}
      \caption{Dataset 1 with DBSCAN clustering, $Minpoints = 2 $ and different value of $\epsilon$}
+     \label{fig:DBScan_varyeps}
 \end{figure}
 
 
@@ -555,14 +559,17 @@ The smaller the $\epsilon$,
 % \end{wrapfigure}
 \subsection{Methods comparison}
 
-The purpose of this section is to compare the GMM and SVM method with the "hacked" dataset (i.e. \textbf{Dataset 2}). Several factors can influence the performance of the GMM and C-SVM classification methods. Since there are many factors to take into account, a comparison plan is fixed in figure (\ref{fig:comparison-block-diag}).The first parameters to set are the test/ratio train and the number of folds for crossvalidation because these parameters directly influences the results of classifications of each method.
+The purpose of this section is to compare the GMM and SVM method with the dataset 2. Several factors can influence the performance of the GMM and C-SVM classification methods. Since there are many factors to take into account, a comparison plan is fixed in Figure \ref{fig:comparison-block-diag}. The first parameters to set are the test/ratio train and the number of folds for crossvalidation because these parameters directly influences the classification results for each method.
 
 \textbf{Train/test ratio}\\
-We noticed that if we take a small ratio train/test there is not enough point to train the algorithm.If the ratio is too high, there is not enough test point and the variance becomes too high. A good trade-off is actually the ratio 2/3 training, 1/3 testing.
+As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $0.667$.
+
+ADD PROOF!!
 
 \textbf{Number of folds sensitivity}\\
-In MLStudio, the crossvalidation method is based on a random separation of the data between Train and test before repeating the classification and averaging the results. With this type of cross validation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, too much fold is not useful because after a while the results do not improve but the cost of calculation increase. A good trade-off for our dataset was 30 folds because it was at this point that the results started to stabilize between several cross validation process.
+In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process.
 
+ADD PROOF!!
 
 \begin{figure}[H]
 	\centering
@@ -573,16 +580,26 @@ In MLStudio, the crossvalidation method is based on a random separation of the d
 
 
 \subsection{GMM classification}
-For the GMM classification the hyperparameters were found in three stages. First, the K-Means initialization mode is set because it is the mode expected to be more efficient than the random and uniform method. A full covariance matrix is set to allow as much freedom as possible. In the figure \ref{fig:GMM_graph_1} a comparison with the number of components per class based on the F-Measure allows to choose the number of GMMs per class. 
+For the GMM classification, the hyperparameters to be found were:
+
+\begin{itemize}
+  \item the number of gaussian components;
+  \item the type of matrix (spherical, diagonal, full);
+  \item the initialization method (random, uniform, K-Means).
+\end{itemize}
+
+ These hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow as much freedom as possible. \todo{I'm not fully convinced by the explanation of why the full matrix: to check} In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{pictures/GMM_graph_1}
-	\caption{GMM: comparison for different number of components per class}
+	\caption{GMM: comparison for different number of gaussian components per class}
 	\label{fig:GMM_graph_1}
 \end{figure}
 
-This graph shows that only one GMM per class is the most favorable for classifying the dataset. The training set shows better results with more GMMs per class but the classification of the testing set gets worse and the variance is higher.
+The training set shows better results with a higher number of GMMs per class but the F-Measure for the testing set gets worse and the variance becomes higher, which is possibly due to an overfitting phenomenon.
+It can be noticed that for 4 and 5 components, the F-Measure's variance limit is higher than 1. As it is not possible to have a F-Measure higher than 1, this can be explained by the fact that the graph was produced with Excel, and the variance values are the same for the lower and higher limits.
+TO REWRITE!!
 
 \begin{figure}[H]
 \centering
@@ -600,16 +617,17 @@ This graph shows that only one GMM per class is the most favorable for classifyi
       \label{fig:GMM_graph_3}
      \end{subfigure}
 \caption{F-measure comparison for different type of matrix and initialization}
+\label{fig:GMM_matrix_init}
 \end{figure}
 
-By following the procedure explained in the block diagram \ref{fig:comparison-block-diag} the plots \ref{fig:GMM_graph_3} allow us to justify our choices. A spherical covariance matrix and a K-Means initialization method are chosen to favor the smallest variance on the training set. Indeed a large variance on the testing set indicates an overfiting problem of the training set.
+By following the procedure explained in the block diagram in Figure \ref{fig:comparison-block-diag}, the plots in Figure \ref{fig:GMM_matrix_init} are obtained. In particular, they show that a spherical covariance matrix and a K-Means initialization method achieve the smallest variance on the training set. Indeed, a large variance on the testing set indicates an overfitting problem of the training set.
 
-\subsection{C-SVM classification}
+\subsection{C-SVM classification (linear \& RBS)}
 
 \begin{figure}[H]
 \centering
     \begin{subfigure}[t]{0.4\textwidth}
-      \centering
+      \centering0.66
       \includegraphics[height=4cm]{pictures/linear-SVM}
       \caption{Linear C-SVM: comparison for different penalty factor C}
       \label{fig:linear-SVM}
@@ -623,9 +641,14 @@ By following the procedure explained in the block diagram \ref{fig:comparison-bl
      \end{subfigure}
      \caption{F-measure comparison for different type of matrix and initialization}
 \end{figure}
-\todo{sigma 0.1, 0.01, 0,001 good choice ?}
 
-The only hyperparameter that must be choosen for the linear SVM classification method is the weights the penalty term (i.e. the "C"). The goal is to find the best tradeoff between minimizing the classification errors and maximizing the margin with the helps of the plot \ref{fig:linear-SVM}. To have a lower variance on the testing set classification a C of 32 is chosen. Lower variance is preferable even though the average of the F-Measure is a little smaller to minimize the overfitting of the training set. For the non-linear SVM classification some values of $ \ sigma $ and $ C $ are chosen and all combinations are compared in the figure \ref{fig:non-linear-SVM}.This figure shows that the best combination is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance on training and testing set.
+The hyperparameter that must be choosen for the SVM classification method are:
+\begin{itemize}
+  \item the penalty term C;
+  \item the width of the RBS kernel (RBS only).
+\end{itemize}
+
+ The goal was to find the best tradeoff between minimizing the classification errors and maximizing the margin \todo{What margin?}. In Figure \ref{fig:linear-SVM}. To have a lower variance on the testing set classification a C of 32 is chosen. Lower variance is preferable even though the average of the F-Measure is a little smaller to minimize the overfitting of the training set. For the non-linear SVM classification some values of $ \ sigma $ and $ C $ are chosen and all combinations are compared in the figure \ref{fig:non-linear-SVM}.This figure shows that the best combination is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance on training and testing set.
 
 \subsection{C-SVM and GMM comparison}
 
