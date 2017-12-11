@@ -307,41 +307,6 @@ Finally, K-Means behaviour was tested for different values of K (see Figure \ref
 \end{figure}
 
 
-\subsubsection*{Initialization}
-
-%Different iterations for kmeans
-\begin{figure}[H]
-\centering
-    \begin{subfigure}[t]{0.2\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-3K}
-      \caption{K = 3}
-      \label{fig:dataset_1_Kmeans-L2-3K}
-     \end{subfigure}
-      ~
-    \begin{subfigure}[t]{0.2\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-4K}
-      \caption{K = 4}
-      \label{fig:dataset_1_Kmeans-L2-4K}
-     \end{subfigure}
-      ~
-    \begin{subfigure}[t]{0.2\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-5K}
-      \caption{K = 5}
-      \label{fig:dataset_1_Kmeans-L2-5K}
-     \end{subfigure}
-      ~
-    \begin{subfigure}[t]{0.2\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{pictures/dataset_1_Kmeans-L2-6K}
-      \caption{K = 6}
-      \label{fig:dataset_1_Kmeans-L2-6K}
-     \end{subfigure}
-     \caption{Dataset 1 with K-Means clustering, Euclidean metrics and different value of K}
-     \label{fig:kmeans_differentK}
-\end{figure}
 
 \subsection{Soft K-Means}
 
@@ -425,6 +390,72 @@ It can be noticed that the results for soft K-Means when varying the K don't dif
 \end{figure}
 %End different Ks
 
+\subsubsection*{Initialization}
+
+The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show an initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a correct clustering in the end.\ref{}
+
+%Different iterations for kmeans
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it1.png}
+      \caption{Iteration 1}
+      \label{fig:K-Means-4K-beta-30-it1}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it2.png}
+      \caption{Iteration 2}
+      \label{fig:K-Means-4K-beta-30-it2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it3.png}
+      \caption{Iteration 3}
+      \label{fig:K-Means-4K-beta-30-it3}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it10.png}
+      \caption{Iteration 10}
+      \label{fig:K-Means-4K-beta-30-it10}
+     \end{subfigure}
+     ~
+     \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it1(2).png}
+      \caption{Iteration 1}
+      \label{fig:K-Means-4K-beta-30-it1-2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it2(2).png}
+      \caption{Iteration 2}
+      \label{fig:K-Means-4K-beta-30-it2-2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it3(2).png}
+      \caption{Iteration 3}
+      \label{fig:K-Means-4K-beta-30-it3-2}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.2\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it6(2).png}
+      \caption{Iteration 6}
+      \label{fig:K-Means-4K-beta-30-it6-2}
+     \end{subfigure}
+     \caption{Dataset 1 with soft K-Means clustering for K=4 and $\beta=30$, showing effects of random initialization}
+     \label{fig:kmeans_init}
+\end{figure}
+
 
 \subsection{DBSCAN}
 
@@ -505,11 +536,6 @@ The smaller the $\epsilon$,
      \end{subfigure}
      \caption{Dataset 1 with DBSCAN clustering, $Minpoints = 2 $ and different value of $\epsilon$}
 \end{figure}
-
-\subsection{Type of metric}
-
-\subsection{Initialization}
-
 
 
 % For K-Means and Soft-K-Means, you could report on the eﬀect of the choice of the hyperparameters, metric and initialization on the position of the centroids, the shape of the regions, the found clusters, etc.
