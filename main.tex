@@ -16,8 +16,8 @@
  \geometry{
    a4paper,
    total={170mm,257mm},
-   left=15mm,
-   right=15mm,
+   left=20mm,
+   right=20mm,
    top=15mm,
  }
  \hypersetup{
@@ -626,16 +626,16 @@ By following the procedure explained in the block diagram in Figure \ref{fig:com
 
 \begin{figure}[H]
 \centering
-    \begin{subfigure}[t]{0.4\textwidth}
-      \centering0.66
-      \includegraphics[height=4cm]{pictures/linear-SVM}
+    \begin{subfigure}[t]{0.45\textwidth}
+      \centering
+      \includegraphics[height=5cm]{pictures/linear-SVM}
       \caption{Linear C-SVM: comparison for different penalty factor C}
       \label{fig:linear-SVM}
      \end{subfigure}
       ~
-    \begin{subfigure}[t]{0.4\textwidth}
+    \begin{subfigure}[t]{0.45\textwidth}
       \centering
-      \includegraphics[height=4cm]{pictures/non-linear-SVM}
+      \includegraphics[height=5cm]{pictures/non-linear-SVM}
       \caption{C-SVM with RBF kernel: comparison for different pairs of hyperparameters}
       \label{fig:non-linear-SVM}
      \end{subfigure}
@@ -648,7 +648,9 @@ The hyperparameter that must be choosen for the SVM classification method are:
   \item the width of the RBS kernel (RBS only).
 \end{itemize}
 
- The goal was to find the best tradeoff between minimizing the classification errors and maximizing the margin \todo{What margin?}. In Figure \ref{fig:linear-SVM}. To have a lower variance on the testing set classification a C of 32 is chosen. Lower variance is preferable even though the average of the F-Measure is a little smaller to minimize the overfitting of the training set. For the non-linear SVM classification some values of $ \ sigma $ and $ C $ are chosen and all combinations are compared in the figure \ref{fig:non-linear-SVM}.This figure shows that the best combination is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance on training and testing set.
+ The goal was to find the best tradeoff between minimizing the classification errors and maximizing the margin. \todo{What margin?} For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a C of 32 was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller. 
+
+ For the non-linear SVM classification values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades as the $\sigma$ decreases and its variance increases, while the training F-Measure increases and its variance decreases. This can be explained by a overfitting phenomenon. 
 
 \subsection{C-SVM and GMM comparison}
 
