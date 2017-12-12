@@ -111,7 +111,7 @@ Chairs           & Angular			& Light        	& 12                               
 \end{table}
 
 An effort was made to have a linear separable dataset in the beginning for learning purposes. In order to obtain that, the images for each class were purposely chosen to have similar caracteristics such as shape, color and orientation in space.
-For the second part of this report the same dataset was used, but some noisy datapoints were added by hand in MLDemos (4 per class). This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
+For the second part of this report the same dataset was used, but some noisy datapoints were added by hand in MLDemos (5 per class). This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
 
 \begin{figure}[H]
 \centering
@@ -648,9 +648,9 @@ The hyperparameter that must be choosen for the SVM classification method are:
   \item the width of the RBS kernel (RBS only).
 \end{itemize}
 
- The goal was to find the best tradeoff between minimizing the classification errors and maximizing the margin. \todo{What margin?} For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a C of 32 was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller. 
+ The goal was to find the best tradeoff between minimizing the classification errors and maximizing the margin. \todo{What margin?} For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a $C = 32$ was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller. 
 
- For the non-linear SVM classification values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades as the $\sigma$ decreases and its variance increases, while the training F-Measure increases and its variance decreases. This can be explained by a overfitting phenomenon. 
+ For the non-linear SVM classification, values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This can be explained by a overfitting phenomenon. 
 
 \subsection{C-SVM and GMM comparison}
 
@@ -683,7 +683,7 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
      \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
 \end{figure}
 
-\subsection{Test of sensitivity}
+\subsection{Classifiers robustness}
 \begin{figure}[H]
 \centering
 	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
