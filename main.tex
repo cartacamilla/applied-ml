@@ -643,66 +643,89 @@ By following the procedure explained in the block diagram in Figure \ref{fig:com
 
 The hyperparameter that must be choosen for the SVM classification method are:
 \begin{itemize}
-  \item the penalty term C;
-  \item the width of the RBS kernel (RBS only).
+  \item the penalty term $C$;
+  \item the width of the RBS kernel $\sigma$ (RBS only).
 \end{itemize}
 
- For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a $C = 32$ was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller.\\
+ For the linear SVM, the $C$ parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a $C = 32$ was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller.
 
- For the non-linear SVM classification, values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This could be due to overfitting. 
+ For the non-linear SVM classification, values of $\sigma$ and $C$ are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen $C$, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This could be due to overfitting. 
 
-In order to verify what happens for lower values of C, the $\sigma$ was fixed to 0.01 and values from 1 to 10 were tested (see Figure \ref{fig:non-linear-SVM_fixeRBF}). It can be observed that the higher the C, the more the training F-Measure increases and the testing F-Measure tend to decrease. This reinforces the hypothesis that 
+In order to verify what happens for lower values of $C$, the $\sigma$ was fixed to 0.01 and values from 1 to 10 were tested (see Figure \ref{fig:non-linear-SVM_fixeRBF}). It can be observed that the higher the $C$, the more the training F-Measure increases and the testing F-Measure tends to decrease. This reinforces the hypothesis that for higher values of $C$, the model has the tendency to overfit. This result could be explained since the dataset 2 contains noisy datapoints that are prone to be misclassified and the factor $C$ penalizes such points. 
+
+The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and $\sigma$ varied ranging from 0.1 to 0.8 (see Figure \ref{fig:non-linear-SVM_fixeC}). It was found that the optimal choice for the non-linear SVM hyperparameters would be $C = 1$ and $\sigma = 0.2$
 
  \begin{figure}[H]
  \centering
     \begin{subfigure}[t]{0.4\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/non-linear-SVM_fixeRBF}
-      \caption{C-SVM with RBF kernel: comparison for different penalty factor C  and $\sigma = 0.1$}
+      \caption{C-SVM with RBF kernel: comparison for different penalty factors $C$  and $\sigma = 0.1$}
       \label{fig:non-linear-SVM_fixeRBF}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.4\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/non-linear-SVM_fixeC}
-      \caption{C-SVM with RBF kernel: comparison for different width $\sigma$ and a penalty factor $C = 1$}
+      \caption{C-SVM with RBF kernel: comparison for different widths $\sigma$ and a penalty factor $C = 1$}
       \label{fig:non-linear-SVM_fixeC}
      \end{subfigure}
-     \caption{F-measure comparison for different type of matrix and initialization}\label{fig:non-linear-SVM_fixe}
+     \caption{F-Measure comparison for different types of matrix and initializations}\label{fig:non-linear-SVM_fixe}
 \end{figure}
-After testing several peer of hyperparameter, it is interesting to fix values of $\sigma$ or $C$ as in Figure \ref{fig:non-linear-SVM_fixe}. When $\sigma$ is fixed, Figure \ref{fig:non-linear-SVM_fixeRBF} shows that the testing set is better when the penalty factor is relatively low. The F-Measure of the training set is slightly lower for small $C$ and the F-Measure of the testing set is higher with a smaller variance. This result is explained because the dataset 2 is noisy and the factor $C$ penalizes the misclassified points. Then, with a large $C$ the model can overfitter the training set.
 
 
 \subsection{C-SVM and GMM comparison}
 
-The SVM method with an RBF kernel is the most appropriate for classifying dataset 2.\\
+The SVM method with an RBF kernel is the most appropriate for classifying dataset 2.
+
 \todo{Expliquer un peu plus}
 
 \begin{figure}[H]
 \centering
-	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
+	\begin{subfigure}[t]{0.3\textwidth} 
       \centering
       \includegraphics[height=3.2 cm]{pictures/Compare-best-classification-training}
       \caption{Training set}
       \label{fig:Compare-best-classification-training}
     \end{subfigure}%
     ~
-    \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-SVM}
+    \begin{subfigure}[t]{0.3\textwidth} 
       \centering
       \includegraphics[height=3.2 cm]{pictures/Compare-best-classification-test}
       \caption{Test set}
       \label{fig:Compare-best-classification-training}
      \end{subfigure}
-      ~
-    \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-C-SVM}
+     \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
+     \label{fig:F-Measure-boxes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+     \begin{subfigure}[t]{0.3\textwidth} 
       \centering
-      \includegraphics[height= 3.2 cm]{pictures/classification-best.png}
-      \caption{C-SVM ($\sigma = 0.1$ and $C=10$)}
-      \label{fig:classification-best}
+      \includegraphics[height= 3.2 cm]{pictures/classification-best-GMM-SPH-C1.png}
+      \caption{GMM with spherical matrix and 1 gaussian component}
+      \label{fig:classification-best-GMM}
      \end{subfigure}
       ~
-     \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
+    \begin{subfigure}[t]{0.3\textwidth} 
+      \centering
+      \includegraphics[height= 3.2 cm]{pictures/classification-best-CSVM-C32.png}
+      \caption{Linear C-SVM ($C=32$)}
+      \label{fig:classification-best-lin-CSVM}
+     \end{subfigure}
+     ~
+    \begin{subfigure}[t]{0.3\textwidth} 
+      \centering
+      \includegraphics[height= 3.2 cm]{pictures/classification-best-CSVM-C1-S02.png}
+      \caption{RBF C-SVM ($\sigma = 0.2$ and $C=1$)}
+      \label{fig:classification-best-RBFCSVM}
+     \end{subfigure}
+    \caption{MLDemo results for optimal GMM, linear C-SVM and RBF C-SVM}
+    \label{fig:best-plots}
+
 \end{figure}
+
 
 
 
