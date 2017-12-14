@@ -671,12 +671,11 @@ In order to verify what happens for lower values of C, the $\sigma$ was fixed to
      \caption{F-measure comparison for different type of matrix and initialization}\label{fig:non-linear-SVM_fixe}
 \end{figure}
 After testing several peer of hyperparameter, it is interesting to fix values of $\sigma$ or $C$ as in Figure \ref{fig:non-linear-SVM_fixe}. When $\sigma$ is fixed, Figure \ref{fig:non-linear-SVM_fixeRBF} shows that the testing set is better when the penalty factor is relatively low. The F-Measure of the training set is slightly lower for small $C$ and the F-Measure of the testing set is higher with a smaller variance. This result is explained because the dataset 2 is noisy and the factor $C$ penalizes the misclassified points. Then, with a large $C$ the model can overfitter the training set.
-
+Figure \ref{fig:non-linear-SVM_fixeC} shows very good result for $C=1$ and $\sigma = 0.2$. However, it should be remembered that the SVM with a kernel is non-linear, which means that several pairs of $C$ and $\sigma$ can give an optimum. In this quantitative study the best pair found was $C = 1$ and $\sigma = 0.2$ but other optimal solution might exist.
 
 \subsection{C-SVM and GMM comparison}
 
-The SVM method with an RBF kernel is the most appropriate for classifying dataset 2.\\
-\todo{Expliquer un peu plus}
+The results obtained for the three models gives good results and the SVM method with an RBF kernel is the best for classifying dataset 2. The variance of the testing set is lower and the average of the F-Measure is highest on the testing set for the SVM method with an RBF kernel (\ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best} shows the result of the non-linear SVM classification for the best value of $C$ and $\sigma$ founded. 
 
 \begin{figure}[H]
 \centering
@@ -697,7 +696,7 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
     \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-C-SVM}
       \centering
       \includegraphics[height= 3.2 cm]{pictures/classification-best.png}
-      \caption{C-SVM ($\sigma = 0.1$ and $C=10$)}
+      \caption{C-SVM ($\sigma = 0.2$ and $C=1$)}
       \label{fig:classification-best}
      \end{subfigure}
       ~
@@ -705,9 +704,8 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
 \end{figure}
 
 
+Once these results obtained, as indicated in Figure \ref{fig:comparison-block-diag}, it is interesting to test each model with different train/test ratio and number of fold for the crossvalidation.\\
 
-\subsection{Classifiers robustness} 
-\label{sec:classifier_robustness}
 
 \textbf{Train/test ratio}\\
 As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained and the more it will be prone to underfitting, which would cause poor performance on unseen data. This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$. Figure \ref{fig:robustness-train-ratio} shows that the classifier overfits the training set with a ratio of $10\%$.
