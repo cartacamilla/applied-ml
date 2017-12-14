@@ -668,9 +668,9 @@ In order to verify what happens for lower values of C, the $\sigma$ was fixed to
       \caption{C-SVM with RBF kernel: comparison for different width $\sigma$ and a penalty factor $C = 1$}
       \label{fig:non-linear-SVM_fixeC}
      \end{subfigure}
-     \caption{F-measure comparison for different type of matrix and initialization}
+     \caption{F-measure comparison for different type of matrix and initialization}\label{fig:non-linear-SVM_fixe}
 \end{figure}
-\todo{Expliquer la figure 17 b}
+After testing several peer of hyperparameter, it is interesting to fix values of $\sigma$ or $C$ as in Figure \ref{fig:non-linear-SVM_fixe}. When $\sigma$ is fixed, Figure \ref{fig:non-linear-SVM_fixeRBF} shows that the testing set is better when the penalty factor is relatively low. The F-Measure of the training set is slightly lower for small $C$ and the F-Measure of the testing set is higher with a smaller variance. This result is explained because the dataset 2 is noisy and the factor $C$ penalizes the misclassified points. Then, with a large $C$ the model can overfitter the training set.
 
 
 \subsection{C-SVM and GMM comparison}
@@ -703,6 +703,7 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
       ~
      \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
 \end{figure}
+
 
 
 \subsection{Classifiers robustness} 
