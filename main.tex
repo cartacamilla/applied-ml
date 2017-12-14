@@ -53,6 +53,10 @@
 \section{Introduction}
 
 %When reporting on your work do not explain the techniques you are using. You do not have space for this. Focus on reporting only on the results you get when you apply these techniques. Do not forget that the report is 10 pages long maximum (single column, 10pt minimum) in PDF format. {\bf Pages beyond the tenth one will be ignored and material in these pages will not be graded.}
+This report focuses on the application of machine learning techniques, supervised and unsupervised. In particular, a linearly separable dataset consisting of images belonging to 4 different classes was constructed. PCA was then applied to reduce its dimensionality and clustering techniques such as K-Means, Soft K-Means and DBScan were used to perform unsupervised class separation. For the K-Means techniques, the effect of random initialisation was also analysed. 
+
+In a second moment, a new dataset was created, which derived from the first one but was made less linearly separable by the addition of some noisy points. This dataset was then used to test the performance of different classification techniques, such as GMM, linear and non-linear SVM. Finally, these methods were compared and the effect of parameters such as train/test ratio and number of folds for cross-validation was studied. 
+
 
 \section{Datasets}
 %Describe here your dataset (dimension of data, number of images per class, number of classes, features representatives of each class). Add illustrative images of the elements in your dataset to help the reader understand what each class entails.
@@ -93,7 +97,7 @@ The initial dataset was composed of 4 classes with 12 images per class. Figure \
 \end{figure}
 
 
-The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels. With a RGB color format, there is and a number of $48\times48\times3$ features.
+The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels. With a RGB color format, there is a number of $48\times48\times3$ features.
 
 
 \begin{table}[H]
@@ -111,7 +115,7 @@ Chairs           & Angular			& Light        	& 12                               
 \end{table}
 
 An effort was made to have a linear separable dataset in the beginning for learning purposes. In order to obtain that, the images for each class were purposely chosen to have similar caracteristics such as shape, color and orientation in space.
-For the second part of this report the same dataset was used, but some noisy datapoints were added by hand in MLDemos (5 per class). This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
+For the second part of this report the same dataset was used, but some noisy datapoints were added by hand in MLDemos (5 per class) for a total of 17 datapoints per class. This new dataset can be seen in Figure \ref{fig:dataset_new_2}. 
 
 \begin{figure}[H]
 \centering
@@ -198,7 +202,7 @@ The hyperparameters for the K-means method are:
 \item the metric ($L_1$, $L_2$, $L_{\infty}$, $L_p$).
 \end{itemize}
 
-In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. 
+In Figure \ref{fig:good_kmeans}, correct results (when compared to the original labeled data) are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. 
 
 Although all metrics were able to correctly separate the classes, some classification errors could typically be obtained, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means (see Initialization below) and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
 
@@ -541,7 +545,10 @@ For smaller values of $\epsilon$ (as Figure \ref{fig:DBSCAN-Minpoint-2-epsilon00
      \label{fig:DBScan_varyeps}
 \end{figure}
 
+\subsection{Algorithm comparison}
+It could be seen that K-Means and Soft K-Means yield similar results, which are quite satisfactory. On the other hand, DBScan does not perform as well, since the inhomogeneous distribution of the different classes makes it difficult to choose a meaningful combination of Minpts-$\epsilon$ that behaves well for all classes. 
 
+As for the computational cost, K-Means is the least costly, followed by Soft K-Means, while DBScan is computationnaly intense. As such, the optimal method to cluster the data in this case would be K-Means.
 % For K-Means and Soft-K-Means, you could report on the eﬀect of the choice of the hyperparameters, metric and initialization on the position of the centroids, the shape of the regions, the found clusters, etc.
 
 % For DBSCAN, it could refer to the number of clusters found with respect to the hyperparameters, the proportion of points considered as noise, etc.
@@ -644,6 +651,7 @@ The hyperparameter that must be choosen for the SVM classification method are:
 
  For the non-linear SVM classification, values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This could be due to overfitting. 
 
+In order to verify what happens for lower values of C, the $\sigma$ was fixed to 0.01 and values from 1 to 10 were tested (see Figure \ref{fig:non-linear-SVM_fixeRBF}). It can be observed that the higher the C, the more the training F-Measure increases and the testing F-Measure tend to decrease. This reinforces the hypothesis that 
 
  \begin{figure}[H]
  \centering

@@ -5,10 +5,11 @@
 \BOOKMARK [2][-]{subsection.4.1}{K-means}{section.4}% 5
 \BOOKMARK [2][-]{subsection.4.2}{Soft K-Means}{section.4}% 6
 \BOOKMARK [2][-]{subsection.4.3}{DBSCAN}{section.4}% 7
-\BOOKMARK [1][-]{section.5}{Classification - quantitative assessment}{}% 8
-\BOOKMARK [2][-]{subsection.5.1}{Methods comparison}{section.5}% 9
-\BOOKMARK [2][-]{subsection.5.2}{GMM classification}{section.5}% 10
-\BOOKMARK [2][-]{subsection.5.3}{C-SVM classification \(linear \046 RBS\)}{section.5}% 11
-\BOOKMARK [2][-]{subsection.5.4}{C-SVM and GMM comparison}{section.5}% 12
-\BOOKMARK [2][-]{subsection.5.5}{Classifiers robustness}{section.5}% 13
-\BOOKMARK [2][-]{subsection.5.6}{Overall discussion and conclusion}{section.5}% 14
+\BOOKMARK [2][-]{subsection.4.4}{Algorithm comparison}{section.4}% 8
+\BOOKMARK [1][-]{section.5}{Classification - quantitative assessment}{}% 9
+\BOOKMARK [2][-]{subsection.5.1}{Methods comparison}{section.5}% 10
+\BOOKMARK [2][-]{subsection.5.2}{GMM classification}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.3}{C-SVM classification \(linear \046 RBS\)}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.4}{C-SVM and GMM comparison}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.5}{Classifiers robustness}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.6}{Overall discussion and conclusion}{section.5}% 15
