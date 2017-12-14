@@ -547,7 +547,7 @@ For smaller values of $\epsilon$ (as Figure \ref{fig:DBSCAN-Minpoint-2-epsilon00
 % For DBSCAN, it could refer to the number of clusters found with respect to the hyperparameters, the proportion of points considered as noise, etc.
 
 
-\section{Classification}
+\section{Classification - quantitative assessment}
 % Report on performances when running the different classifiers.
 % Report on values tested for i) the hyperparameters, ii) the training/testing ratios, iii) number of folds for crossvalidation. Give performance results only for the most interesting choices of hyperparameters, training/testing ratios and number of folds.
 
@@ -580,7 +580,7 @@ For the GMM classification, the hyperparameters to be found were:
 \end{itemize}
 
  
- Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in chapter \ref{fig:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow as much freedom as possible. \todo{I'm not fully convinced by the explanation of why the full matrix: to check} In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.\\
+ Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in chapter \ref{fig:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorith to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.\\
 
 
 \begin{figure}[H]
@@ -641,21 +641,21 @@ The hyperparameter that must be choosen for the SVM classification method are:
   \item the width of the RBS kernel (RBS only).
 \end{itemize}
 
- The goal was to find the best tradeoff between minimizing the classification errors and maximizing the margin. \todo{What margin?} For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a $C = 32$ was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller. 
+ For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a $C = 32$ was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller.\\
 
  For the non-linear SVM classification, values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This can be explained by a overfitting phenomenon. 
 
 
  \begin{figure}[H]
 \centering
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.3\textwidth}
       \centering
       \includegraphics[height=5cm]{pictures/non-linear-SVM_fixeRBF}
       \caption{C-SVM with RBF kernel: comparison for different penalty factor C  and $\sigma = 0.1$}
       \label{fig:non-linear-SVM_fixeRBF}
      \end{subfigure}
       ~
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{subfigure}[t]{0.3\textwidth}
       \centering
       \includegraphics[height=5cm]{pictures/non-linear-SVM_fixeC}
       \caption{C-SVM with RBF kernel: comparison for different width $\sigma$ and a penalty factor $C = 1$}
