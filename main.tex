@@ -545,7 +545,7 @@ For smaller values of $\epsilon$ (as Figure \ref{fig:DBSCAN-Minpoint-2-epsilon00
      \label{fig:DBScan_varyeps}
 \end{figure}
 
-\subsection{Algorithm comparison}
+\subsection{Algorithms comparison}
 It could be seen that K-Means and Soft K-Means yield similar results, which are quite satisfactory. On the other hand, DBScan does not perform as well, since the inhomogeneous distribution of the different classes makes it difficult to choose a meaningful combination of Minpts-$\epsilon$ that behaves well for all classes. 
 
 As for the computational cost, K-Means is the least costly, followed by Soft K-Means, while DBScan is computationnaly intense. As such, the optimal method to cluster the data in this case would be K-Means.
@@ -587,7 +587,7 @@ For the GMM classification, the hyperparameters to be found were:
 \end{itemize}
 
  
- Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in Section \ref{sec:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorithm to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.\\
+ Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in Section \ref{sec:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorithm to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.
 
 
 \begin{figure}[H]
@@ -653,7 +653,7 @@ The hyperparameter that must be choosen for the SVM classification method are:
 
 In order to verify what happens for lower values of $C$, the $\sigma$ was fixed to 0.01 and values from 1 to 10 were tested (see Figure \ref{fig:non-linear-SVM_fixeRBF}). It can be observed that the higher the $C$, the more the training F-Measure increases and the testing F-Measure tends to decrease. This reinforces the hypothesis that for higher values of $C$, the model has the tendency to overfit. This result could be explained since the dataset 2 contains noisy datapoints that are prone to be misclassified and the factor $C$ penalizes such points. 
 
-The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and $\sigma$ varied ranging from 0.1 to 0.8 (see Figure \ref{fig:non-linear-SVM_fixeC}). It was found that the optimal choice for the non-linear SVM hyperparameters would be $C = 1$ and $\sigma = 0.2$
+The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and $\sigma$ varied ranging from 0.1 to 0.8 (see Figure \ref{fig:non-linear-SVM_fixeC}). It was found that the optimal choice for the non-linear SVM hyperparameters would be $C = 1$ and $\sigma = 0.2$. However, it should be remembered that the SVM with a kernel is non-linear, which means that several pairs of $C$ and $\sigma$ can give an optimum. In this quantitative study the best pair found was $C = 1$ and $\sigma = 0.2$ but other optimal solutions might exist.
 
  \begin{figure}[H]
  \centering
@@ -672,31 +672,12 @@ The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and 
      \end{subfigure}
      \caption{F-Measure comparison for different types of matrix and initializations}\label{fig:non-linear-SVM_fixe}
 \end{figure}
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 \subsection{C-SVM and GMM comparison}
 
-The SVM method with an RBF kernel is the most appropriate for classifying dataset 2.
+The results obtained for the three models are satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, when the three models are tested in 30-fold cross-validation, the variance of the testing set is lower and the average of the F-Measure is the highest on the testing set for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
 
-\todo{Expliquer un peu plus}
-=======
-After testing several peer of hyperparameter, it is interesting to fix values of $\sigma$ or $C$ as in Figure \ref{fig:non-linear-SVM_fixe}. When $\sigma$ is fixed, Figure \ref{fig:non-linear-SVM_fixeRBF} shows that the testing set is better when the penalty factor is relatively low. The F-Measure of the training set is slightly lower for small $C$ and the F-Measure of the testing set is higher with a smaller variance. This result is explained because the dataset 2 is noisy and the factor $C$ penalizes the misclassified points. Then, with a large $C$ the model can overfitter the training set.
-Figure \ref{fig:non-linear-SVM_fixeC} shows very good result for $C=1$ and $\sigma = 0.2$. However, it should be remembered that the SVM with a kernel is non-linear, which means that several pairs of $C$ and $\sigma$ can give an optimum. In this quantitative study the best pair found was $C = 1$ and $\sigma = 0.2$ but other optimal solution might exist.
-
-\subsection{C-SVM and GMM comparison}
-
-The results obtained for the three models gives good results and the SVM method with an RBF kernel is the best for classifying dataset 2. The variance of the testing set is lower and the average of the F-Measure is highest on the testing set for the SVM method with an RBF kernel (\ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best} shows the result of the non-linear SVM classification for the best value of $C$ and $\sigma$ founded. 
->>>>>>> 333de21b733fa35f88e60b0da9be1886157ed2b0
-=======
-After testing several peer of hyperparameter, it is interesting to fix values of $\sigma$ or $C$ as in Figure \ref{fig:non-linear-SVM_fixe}. When $\sigma$ is fixed, Figure \ref{fig:non-linear-SVM_fixeRBF} shows that the testing set is better when the penalty factor is relatively low. The F-Measure of the training set is slightly lower for small $C$ and the F-Measure of the testing set is higher with a smaller variance. This result is explained because the dataset 2 is noisy and the factor $C$ penalizes the misclassified points. Then, with a large $C$ the model can overfitter the training set.
-Figure \ref{fig:non-linear-SVM_fixeC} shows very good result for $C=1$ and $\sigma = 0.2$. However, it should be remembered that the SVM with a kernel is non-linear, which means that several pairs of $C$ and $\sigma$ can give an optimum. In this quantitative study the best pair found was $C = 1$ and $\sigma = 0.2$ but other optimal solution might exist.
-
-\subsection{C-SVM and GMM comparison}
-
-The results obtained for the three models gives good results and the SVM method with an RBF kernel is the best for classifying dataset 2. The variance of the testing set is lower and the average of the F-Measure is highest on the testing set for the SVM method with an RBF kernel (\ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best} shows the result of the non-linear SVM classification for the best value of $C$ and $\sigma$ founded. 
->>>>>>> 333de21b733fa35f88e60b0da9be1886157ed2b0
 
 \begin{figure}[H]
 \centering
@@ -721,15 +702,9 @@ The results obtained for the three models gives good results and the SVM method 
 \centering
      \begin{subfigure}[t]{0.3\textwidth} 
       \centering
-<<<<<<< HEAD
       \includegraphics[height= 3.2 cm]{pictures/classification-best-GMM-SPH-C1.png}
       \caption{GMM with spherical matrix and 1 gaussian component}
       \label{fig:classification-best-GMM}
-=======
-      \includegraphics[height= 3.2 cm]{pictures/classification-best.png}
-      \caption{C-SVM ($\sigma = 0.2$ and $C=1$)}
-      \label{fig:classification-best}
->>>>>>> 333de21b733fa35f88e60b0da9be1886157ed2b0
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.3\textwidth} 
@@ -751,38 +726,30 @@ The results obtained for the three models gives good results and the SVM method 
 \end{figure}
 
 
-Once these results obtained, as indicated in Figure \ref{fig:comparison-block-diag}, it is interesting to test each model with different train/test ratio and number of fold for the crossvalidation.\\
-<<<<<<< HEAD
-
-<<<<<<< HEAD
+Once these results obtained, as indicated in Figure \ref{fig:comparison-block-diag}, it is interesting to test each model with different train/test ratios and number of folds for the crossvalidation.
 
 \subsection{Classifiers robustness} 
 \label{sec:classifier_robustness}
-=======
->>>>>>> 333de21b733fa35f88e60b0da9be1886157ed2b0
-=======
 
->>>>>>> 333de21b733fa35f88e60b0da9be1886157ed2b0
-
-\textbf{Train/test ratio}\\
-As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained and the more it will be prone to underfitting, which would cause poor performance on unseen data. This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$. Figure \ref{fig:robustness-train-ratio} shows that the classifier overfits the training set with a ratio of $10\%$.
+\textbf{Train/test ratio}
+As the dataset in question is quite small, the train/test ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained and the more it will be prone to underfitting, which would cause poor performance on unseen data. This could be a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$. Figure \ref{fig:robustness-train-ratio} shows that the classifier overfits the training set with a ratio of $10\%$.
 
 \begin{figure}[H]
 \centering
-	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
+	\begin{subfigure}[t]{0.3\textwidth} 
       \centering
       \includegraphics[height=3.2 cm]{pictures/train-test-ratio-low-10percent-train-data}
       \caption{Training set}
       \label{fig:train-test-ratio-low-10percent-train-data}
     \end{subfigure}%
     ~
-    \begin{subfigure}[t]{0.3\textwidth} \label{fig:best-SVM}
+    \begin{subfigure}[t]{0.3\textwidth} 
       \centering
       \includegraphics[height=3.2 cm]{pictures/train-test-ratio-low-10percent-test-data}
       \caption{Testing set}
       \label{fig:train-test-ratio-low-10percent-train-data}
      \end{subfigure}
-      ~
+
      \caption{F-measure box-plot comparison with a train/test ratio of 10\% and 30 folds for cross validation.}
      \label{fig:robustness-train-ratio}
 \end{figure}
