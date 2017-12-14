@@ -650,14 +650,14 @@ The hyperparameter that must be choosen for the SVM classification method are:
 \centering
     \begin{subfigure}[t]{0.3\textwidth}
       \centering
-      \includegraphics[height=5cm]{pictures/non-linear-SVM_fixeRBF}
+      \includegraphics[height=3cm]{pictures/non-linear-SVM_fixeRBF}
       \caption{C-SVM with RBF kernel: comparison for different penalty factor C  and $\sigma = 0.1$}
       \label{fig:non-linear-SVM_fixeRBF}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.3\textwidth}
       \centering
-      \includegraphics[height=5cm]{pictures/non-linear-SVM_fixeC}
+      \includegraphics[height=3cm]{pictures/non-linear-SVM_fixeC}
       \caption{C-SVM with RBF kernel: comparison for different width $\sigma$ and a penalty factor $C = 1$}
       \label{fig:non-linear-SVM_fixeC}
      \end{subfigure}
@@ -698,6 +698,9 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
 
 \subsection{Classifiers robustness} \label{fig:classifier_robustness}
 
+\textbf{Train/test ratio}\\
+As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $0.667$.
+
 \begin{figure}[H]
 \centering
 	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
@@ -714,18 +717,60 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
       \label{fig:train-test-ratio-low-10percent-train-data}
      \end{subfigure}
       ~
-     \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
+     \caption{F-measure box-plot comparison with a train/test ratio of 10\% and 30 folds for cross validation.}\label{fig:robustness-train-ratio}
 \end{figure}
 
-\textbf{Train/test ratio}\\
-As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $0.667$.
-
-ADD PROOF!!
 
 \textbf{Number of folds sensitivity}\\
-In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process.
+In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process. Figure \ref{fig:robustness-fold} shows the disparity of the results between three iteration when choosing only 10 folds for the crossvalidation in figure \ref{fig:10-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:10-fold-train-test-ratio-66percent-test-data-C}. The results are more stable when choosing 30 folds as seen in figures \ref{fig:30-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:30-fold-train-test-ratio-66percent-test-data-C}.
 
-ADD PROOF!!
+
+\begin{figure}[H]
+\centering
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[height=3cm]{pictures/30-fold-train-test-ratio-66percent-test-data-A}
+      \caption{30 folds - Iteration 1}
+      \label{fig:30-fold-train-test-ratio-66percent-test-data-A}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[height=3cm]{pictures/30-fold-train-test-ratio-66percent-test-data-B}
+      \caption{30 folds - Iteration 2}
+      \label{fig:30-fold-train-test-ratio-66percent-test-data-B}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[height=3cm]{pictures/30-fold-train-test-ratio-66percent-test-data-C}
+      \caption{30 folds - Iteration 3}
+      \label{fig:30-fold-train-test-ratio-66percent-test-data-C}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[height=3cm]{pictures/10-fold-train-test-ratio-66percent-test-data-A}
+      \caption{10 folds - Iteration 1}
+      \label{fig:10-fold-train-test-ratio-66percent-test-data-A}
+     \end{subfigure}
+     ~
+     \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[height=3cm]{pictures/10-fold-train-test-ratio-66percent-test-data-B}
+      \caption{10 folds - Iteration 2}
+      \label{fig:10-fold-train-test-ratio-66percent-test-data-B}
+     \end{subfigure}
+      ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \includegraphics[height=3cm]{pictures/10-fold-train-test-ratio-66percent-test-data-C}
+      \caption{10 folds - Iteration 3}
+      \label{fig:10-fold-train-test-ratio-66percent-test-data-C}
+     \end{subfigure}
+     \caption{F-measure box-plot comparison for 30 respectively 10 folds for crossvalidation and three different iteration with a train/test ratio of 66\%.}
+     \label{fig:robustness-fold}
+\end{figure}
 
 \subsection{Overall discussion and conclusion}
 
