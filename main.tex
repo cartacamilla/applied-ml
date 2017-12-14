@@ -93,7 +93,7 @@ The initial dataset was composed of 4 classes with 12 images per class. Figure \
 \end{figure}
 
 
-The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels and a number of features of $48\times48\times3$.
+The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels. With a RGB color format, there is and a number of features of $48\times48\times3$.
 
 
 \begin{table}[H]
@@ -561,15 +561,6 @@ For smaller values of $\epsilon$ (as Figure \ref{fig:DBSCAN-Minpoint-2-epsilon00
 
 The purpose of this section is to compare the GMM and SVM method with the dataset 2. Several factors can influence the performance of the GMM and C-SVM classification methods. Since there are many factors to take into account, a comparison plan is fixed in Figure \ref{fig:comparison-block-diag}. The first parameters to set are the test/ratio train and the number of folds for crossvalidation because these parameters directly influences the classification results for each method.
 
-\textbf{Train/test ratio}\\
-As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $0.667$.
-
-ADD PROOF!!
-
-\textbf{Number of folds sensitivity}\\
-In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process.
-
-ADD PROOF!!
 
 \begin{figure}[H]
 	\centering
@@ -588,7 +579,9 @@ For the GMM classification, the hyperparameters to be found were:
   \item the initialization method (random, uniform, K-Means).
 \end{itemize}
 
- These hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow as much freedom as possible. \todo{I'm not fully convinced by the explanation of why the full matrix: to check} In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1. 
+ 
+ Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in chapter \ref{fig:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow as much freedom as possible. \todo{I'm not fully convinced by the explanation of why the full matrix: to check} In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.\\
+
 
 \begin{figure}[H]
 	\centering
@@ -702,7 +695,9 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
      \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
 \end{figure}
 
-\subsection{Classifiers robustness}
+
+\subsection{Classifiers robustness} \label{fig:classifier_robustness}
+
 \begin{figure}[H]
 \centering
 	\begin{subfigure}[t]{0.3\textwidth} \label{fig:best-GMM}
@@ -721,6 +716,16 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
       ~
      \caption{F-measure box-plot comparison with a train/test ratio of 66\% and 30 folds for cross validation.}
 \end{figure}
+
+\textbf{Train/test ratio}\\
+As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $0.667$.
+
+ADD PROOF!!
+
+\textbf{Number of folds sensitivity}\\
+In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process.
+
+ADD PROOF!!
 
 \subsection{Overall discussion and conclusion}
 
