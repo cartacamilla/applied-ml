@@ -699,7 +699,7 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
 \subsection{Classifiers robustness} \label{fig:classifier_robustness}
 
 \textbf{Train/test ratio}\\
-As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $0.667$.
+As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$.Figure \ref{fig:robustness-train-ratio} shows that the classifier overfit the training set with a ratio of $10\%$.
 
 \begin{figure}[H]
 \centering
@@ -722,7 +722,8 @@ As the dataset in question is quite small, the training/testing ratio must be ca
 
 
 \textbf{Number of folds sensitivity}\\
-In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process. Figure \ref{fig:robustness-fold} shows the disparity of the results between three iteration when choosing only 10 folds for the crossvalidation in figure \ref{fig:10-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:10-fold-train-test-ratio-66percent-test-data-C}. The results are more stable when choosing 30 folds as seen in figures \ref{fig:30-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:30-fold-train-test-ratio-66percent-test-data-C}.
+In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process. Figure \ref{fig:robustness-fold} shows the disparity of the results between three iteration when choosing only 10 folds for the crossvalidation (figure \ref{fig:10-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:10-fold-train-test-ratio-66percent-test-data-C}). The results are more stable when choosing 30 folds as seen in figures \ref{fig:30-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:30-fold-train-test-ratio-66percent-test-data-C}.
+
 
 
 \begin{figure}[H]
