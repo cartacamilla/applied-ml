@@ -93,7 +93,7 @@ The initial dataset was composed of 4 classes with 12 images per class. Figure \
 \end{figure}
 
 
-The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels. With a RGB color format, there is and a number of features of $48\times48\times3$.
+The pictures are normalized when imported in MLDemos to have the same size. The initial dataset (see Figure \ref{fig:dataset_1}) is stored in a single $336 \times 336 $ image constituted of a 7 by 7 matrix of images. Thus, each image has a size of $48 \times 48$ pixels. With a RGB color format, there is and a number of $48\times48\times3$ features.
 
 
 \begin{table}[H]
@@ -177,7 +177,7 @@ For the second part of this report the same dataset was used, but some noisy dat
 \end{figure}
 
 PCA was applied to the dataset 1. Figure \ref{fig:eigenvalue_dataset1} shows the cumulative reconstruction error: it can be noticed that 73.9\% of the dataset can be reconstructed with the first 8 eigenvectors. 
-It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as expected: indeed they represent most of the variance of the data. The first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 will separate well the watches class from the rest, while the second one will separate better the banana class from the rest. The two principal eigenvectors are shown in Figure \ref{fig:eigenvector_1} while the first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
+It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as could be normally expected: indeed they represent most of the variance of the data. By further studying Figure \ref{fig:eigenvector_1}, the first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 can be expected to separate well the watches class from the rest, while the second one will separate better the banana class from the rest. The two principal eigenvectors are shown in Figure \ref{fig:eigenvector_1} while the first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
 %It can be seen in Figure \ref{fig:eigenvector_1} that the first eigenvector has a strong correlation with the watches class while it is less predominant for the other classes. On the other hand, the second eigenvector has a strong correlation with the apple class and the shape of apples and watches influences the spreads of the two classes in a similar manner. Moreover, these classes are not linearly separable in the other projections (see Figure \ref{fig:PCA_matrix}).
 
 \section{Clustering - qualitative assessment}
@@ -198,9 +198,9 @@ The hyperparameters for the K-means method are:
 \item the metric ($L_1$, $L_2$, $L_{\infty}$, $L_p$).
 \end{itemize}
 
-In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated the same edges as the $L_1$ metric. 
+In Figure \ref{fig:good_kmeans}, correct results are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. 
 
-Although all metrics were able to correctly separate the classes, some errors were typically shown, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means (see Initialization below) and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
+Although all metrics were able to correctly separate the classes, some classification errors could typically be obtained, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means (see Initialization below) and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
 
 \begin{figure}[H]
 \centering
@@ -580,7 +580,7 @@ For the GMM classification, the hyperparameters to be found were:
 \end{itemize}
 
  
- Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in chapter \ref{fig:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorith to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.\\
+ Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in Section \ref{sec:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorithm to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.\\
 
 
 \begin{figure}[H]
@@ -591,8 +591,7 @@ For the GMM classification, the hyperparameters to be found were:
 \end{figure}
 
 The training set shows better results with a higher number of GMMs per class but the F-Measure for the testing set gets worse and the variance becomes higher, which is possibly due to an overfitting phenomenon.
-It can be noticed that for 4 and 5 components, the F-Measure's variance limit is higher than 1. As it is not possible to have a F-Measure higher than 1, this can be explained by the fact that the graph was produced with Excel, and the variance values are the same for the lower and higher limits.
-\todo{TO REWRITE!!}
+It can be noticed that for 4 and 5 components, the F-Measure's variance limit is higher than 1. As it is not possible to have a F-Measure higher than 1, this can be explained by the fact that the graph shows the variance values for a Gaussian distribution, while the data's distribution is not perfectly gaussian.
 
 \begin{figure}[H]
 \centering
@@ -643,7 +642,7 @@ The hyperparameter that must be choosen for the SVM classification method are:
 
  For the linear SVM, the C parameter was trained and tested for values going from 1 to 4096, 32 by 32. In Figure \ref{fig:linear-SVM} it can be observed that the highest F-measure average for the testing set corresponds to $C=16$, but in order to have a lower testing variance a $C = 32$ was chosen. Lower variance is preferable to minimize the overfitting of the training set even though the average of the F-Measure is slightly smaller.\\
 
- For the non-linear SVM classification, values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This can be explained by a overfitting phenomenon. 
+ For the non-linear SVM classification, values of $\sigma$ and C are chosen as specified in Figure \ref{fig:comparison-block-diag} and all combinations are compared in Figure \ref{fig:non-linear-SVM}, which shows that the combination that optimizes the testing F-Measure is $ C = 10 $ and $ \sigma = 0.1$ with the highest F-measure and the lowest variance. Indeed, it can be noticed that, for each chosen C, the testing F-Measure degrades and its variance increases as the $\sigma$ decreases , while the training F-Measure increases and its variance decreases. This could be due to overfitting. 
 
 
  \begin{figure}[H]
@@ -698,10 +697,11 @@ The SVM method with an RBF kernel is the most appropriate for classifying datase
 \end{figure}
 
 
-\subsection{Classifiers robustness} \label{fig:classifier_robustness}
+\subsection{Classifiers robustness} 
+\label{sec:classifier_robustness}
 
 \textbf{Train/test ratio}\\
-As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained but the more it will be robust (less variance on testing set). This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$.Figure \ref{fig:robustness-train-ratio} shows that the classifier overfit the training set with a ratio of $10\%$.
+As the dataset in question is quite small, the training/testing ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained and the more it will be prone to underfitting, which would cause poor performance on unseen data. This is a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$. Figure \ref{fig:robustness-train-ratio} shows that the classifier overfits the training set with a ratio of $10\%$.
 
 \begin{figure}[H]
 \centering
@@ -719,12 +719,13 @@ As the dataset in question is quite small, the training/testing ratio must be ca
       \label{fig:train-test-ratio-low-10percent-train-data}
      \end{subfigure}
       ~
-     \caption{F-measure box-plot comparison with a train/test ratio of 10\% and 30 folds for cross validation.}\label{fig:robustness-train-ratio}
+     \caption{F-measure box-plot comparison with a train/test ratio of 10\% and 30 folds for cross validation.}
+     \label{fig:robustness-train-ratio}
 \end{figure}
 
 
 \textbf{Number of folds sensitivity}\\
-In MLDemos, the crossvalidation method is based on a random separation of the data between train and test on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for our dataset was found to be 30 folds as it was at this point that the results started to stabilize between several cross validation process. Figure \ref{fig:robustness-fold} shows the disparity of the results between three iteration when choosing only 10 folds for the crossvalidation (figure \ref{fig:10-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:10-fold-train-test-ratio-66percent-test-data-C}). The results are more stable when choosing 30 folds as seen in figures \ref{fig:30-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:30-fold-train-test-ratio-66percent-test-data-C}.
+In MLDemos, the crossvalidation method is based on a random separation of the data between training and testing sets on which the classifier is applied. The separation is then repeated f times and the results in the end are averaged. With this type of crossvalidation, a sufficiently large number of folds is recommended to obtain consistent results with lower variance. However, a too high number of repetitions is not useful because after a while the results do not improve but the cost of calculation increases. A good trade-off for this dataset was found to be 30 folds, as it was at this point that the results started to stabilize between several cross validation process. Figure \ref{fig:robustness-fold} shows the disparity of the results between three iteration when choosing only 10 folds for the crossvalidation (Figures \ref{fig:10-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:10-fold-train-test-ratio-66percent-test-data-C}). The results are more stable when choosing 30 folds as seen in Figures \ref{fig:30-fold-train-test-ratio-66percent-test-data-A} to \ref{fig:30-fold-train-test-ratio-66percent-test-data-C}.
 
 
 
