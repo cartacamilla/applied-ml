@@ -78,13 +78,6 @@ The initial dataset was composed of 4 classes with 12 images per class. Figure \
     ~
     \begin{subfigure}[t]{0.2\textwidth}
         \centering
-        \includegraphics[height=2cm]{pictures/chair2} 
-        \caption{Chair}
-        \label{fig:chair}
-    \end{subfigure} 
-    ~
-    \begin{subfigure}[t]{0.2\textwidth}
-        \centering
         \includegraphics[height=2cm]{pictures/stylo4} 
         \caption{Pen}
         \label{fig:pen}
@@ -95,7 +88,15 @@ The initial dataset was composed of 4 classes with 12 images per class. Figure \
         \includegraphics[height=2cm]{pictures/watch2} 
         \caption{Watch}
         \label{fig:watch}
-    \end{subfigure}   
+    \end{subfigure} 
+    ~ 
+    \begin{subfigure}[t]{0.2\textwidth}
+        \centering
+        \includegraphics[height=2cm]{pictures/chair30} 
+        \caption{Chair}
+        \label{fig:chair}
+    \end{subfigure} 
+    ~
 \caption{Four different classes}
 \label{fig:class}
 \end{figure}
@@ -106,15 +107,15 @@ The pictures are normalized when imported in MLDemos to have the same size. The 
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|l|l|l|c|l|}
+\begin{tabular}{|l|l|l|l|c|l|}
 \hline
-\textbf{Classes} & \textbf{Shape} & \textbf{Colour} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Number \\ of images\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}l@{}}Size\\ in pixels\end{tabular} } \\ \hline
-Banana           & Long 			& Yellow         & 12                                                                                        & $48\cdot 48$                                                      \\ \hline
-Pens             & Long and thin 	& Multicoloured  & 12                                                                                        & $48\cdot 48$                                                      \\ \hline
-Watches          & Round 			& Dark          & 12                                                                                        & $48\cdot 48$                                                      \\ \hline
-Chairs           & Angular			& Light        	& 12                                                                                        & $48\cdot 48$                                                      \\ \hline
+\textbf{Classes} & \textbf{Shape} & \textbf{Colour} & \textbf{Orientation} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Number \\ of images\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}l@{}}Size\\ in pixels\end{tabular} } \\ \hline
+Banana           & Long, thick	& Yellow        & horizontal     & 12      & $48\cdot 48$       \\ \hline
+Pens             & Long, thin & Multicoloured & Mostly 45 degree    & 12      & $48\cdot 48$       \\ \hline
+Watches          & Round 			& Dark          & Vertical  & 12      & $48\cdot 48$       \\ \hline
+Chairs           & Angular and sparse		& Light        	& Vertical  & 12      & $48\cdot 48$       \\ \hline
 \end{tabular}
-\caption{Dataset characteristics}
+\caption{Dataset 1 characteristics}
 \label{tab::Dataset-characteristics}
 \end{table}
 
@@ -123,21 +124,21 @@ For the second part of this report the same dataset was used, but some noisy dat
 
 \begin{figure}[H]
 \centering
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.33\textwidth}
       \centering
-      \includegraphics[width=0.8\textwidth]{pictures/dataset_1}
+      \includegraphics[width=0.9\textwidth]{pictures/dataset_1}
       \caption{Pictures in dataset 1}
       \label{fig:dataset_1}
     \end{subfigure}%
     ~
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.33\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/dataset_1_labelized}
       \caption{Projected datapoints of dataset 1}
       \label{fig:dataset_1_labelized}
     \end{subfigure}%
     ~
-	\begin{subfigure}[t]{0.3\textwidth}
+	\begin{subfigure}[t]{0.33\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/dataset_new_2}
       \caption{Projected datapoints of dataset 2}
@@ -173,14 +174,14 @@ For the second part of this report the same dataset was used, but some noisy dat
       \caption{All eigenvectors}
       \label{fig:eigenvectors}
      \end{subfigure}
-     \caption{First PCA}
+     \caption{First PCA with dataset 1}
      \label{fig:PCA}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[height = 6cm]{pictures/PCA_projections}
-  \caption{PCA projection matrix on eigenvectors 1 to 4}
+  \caption{PCA projection matrix on eigenvectors 1 to 4 with dataset 1}
   \label{fig:PCA_matrix}
 \end{figure}
 
@@ -406,7 +407,7 @@ It can be noticed that the results for soft K-Means when varying the K for a fix
 
 \subsubsection*{Initialization}
 
-The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show an initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a second initialisation that results in correct clustering starting from iteration 3.
+The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show a first initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a second initialisation that results in correct clustering starting from iteration 3.
 
 %Different iterations for kmeans
 \begin{figure}[H]
@@ -814,7 +815,7 @@ In MLDemos, the crossvalidation method is based on a random separation of the da
      \label{fig:robustness-fold}
 \end{figure}
 
-\subsection{Overall discussion and conclusion}
+\section{Overall discussion and conclusion}
 
 % Offer an overall appraisal of your work and draw conclusions about the results achieved.
 
