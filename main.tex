@@ -39,7 +39,8 @@
   \titlespacing\section{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
   \titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
   \titlespacing\subsubsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
-
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
 
 
@@ -185,7 +186,7 @@ For the second part of this report the same dataset was used, but some noisy dat
 \end{figure}
 
 PCA was applied to the dataset 1. Figure \ref{fig:eigenvalue_dataset1} shows the cumulative reconstruction error: it can be noticed that 73.9\% of the dataset can be reconstructed with the first 8 eigenvectors. 
-It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as could be normally expected: indeed they represent most of the variance of the data. By further studying Figure \ref{fig:eigenvector_1}, the first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 can be expected to separate well the watches class from the rest, while the second one will separate better the banana class from the rest. The two principal eigenvectors are shown in Figure \ref{fig:eigenvector_1} while the first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
+It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as could be normally expected: indeed they represent most of the variance of the data. By further studying Figure \ref{fig:eigenvector_1}, the first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 can be expected to separate well the Watches class from the rest, while the second one will separate better the Banana class from the rest. The first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
 %It can be seen in Figure \ref{fig:eigenvector_1} that the first eigenvector has a strong correlation with the watches class while it is less predominant for the other classes. On the other hand, the second eigenvector has a strong correlation with the apple class and the shape of apples and watches influences the spreads of the two classes in a similar manner. Moreover, these classes are not linearly separable in the other projections (see Figure \ref{fig:PCA_matrix}).
 
 \section{Clustering - qualitative assessment}
@@ -206,7 +207,11 @@ The hyperparameters for the K-means method are:
 \item the metric ($L_1$, $L_2$, $L_{\infty}$, $L_p$).
 \end{itemize}
 
-In Figure \ref{fig:good_kmeans}, correct results (when compared to the original labeled data) are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. 
+In Figure \ref{fig:good_kmeans}, correct results (when compared to the original labeled data) are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. Indeed 
+
+\begin{equation}
+||v||_{l_\infty} = \lim_{p \rightarrow \infty }\left(\sum_{n} |v_n|^p \right)^{\frac{1}{p}}=  \argmax_{n} {|v_n|}
+\end{equation}
 
 Although all metrics were able to correctly separate the classes, some classification errors could typically be obtained, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means (see Initialization below) and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
 
@@ -681,7 +686,8 @@ The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and 
 \subsection{C-SVM and GMM comparison}
 \label{sec:comparison}
 
-The results obtained for the three models are satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, the three models were trained and tested in 30-fold cross-validation with a train/test ratio of 66\% as shown in Figure \ref{fig:F-Measure-boxes}: it can be observed that the variance of the testing F-Measure is lower and its average is the highest for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
+The results obtained for the three models were satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, the three models were trained and tested in 30-fold cross-validation with a train/test ratio of 66\% as shown in Figure \ref{fig:F-Measure-boxes}: it can be observed that the variance of the testing F-Measure is lower and its average is the highest for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
+
 
 
 \begin{figure}[H]
@@ -812,5 +818,11 @@ In MLDemos, the crossvalidation method is based on a random separation of the da
 \section{Overall discussion and conclusion}
 
 % Offer an overall appraisal of your work and draw conclusions about the results achieved.
+
+This project gave us the opportunity to study closely the effects of supervised and unsupervised learning techniques for clustering and classifying a dataset. To do this, we constructed a dataset having 4 classes and clustered it with different methods such as K-Means, Soft K-Means and DBScan. We also studied the effects of initialisation and hyperparameters tuning on the clustering.
+
+For classification, we used GMM and SVM and studied their behaviour in detail. In particular, we observed how they react to hyperparameter variations and how they compare to each other. This allowed us to understand how to apply these algorithms and how to obtain the best results from them.
+
+
 
 \end{document}
