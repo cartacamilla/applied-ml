@@ -680,7 +680,8 @@ The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and 
 \subsection{C-SVM and GMM comparison}
 \label{sec:comparison}
 
-The results obtained for the three models are satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, the three models were trained and tested in 30-fold cross-validation with a train/test ratio of 66\% as shown in Figure \ref{fig:F-Measure-boxes}: it can be observed that the variance of the testing F-Measure is lower and its average is the highest for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
+The results obtained for the three models were satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, the three models were trained and tested in 30-fold cross-validation with a train/test ratio of 66\% as shown in Figure \ref{fig:F-Measure-boxes}: it can be observed that the variance of the testing F-Measure is lower and its average is the highest for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
+
 
 
 \begin{figure}[H]
@@ -811,5 +812,11 @@ In MLDemos, the crossvalidation method is based on a random separation of the da
 \subsection{Overall discussion and conclusion}
 
 % Offer an overall appraisal of your work and draw conclusions about the results achieved.
+
+This project gave us the opportunity to study closely the effects of supervised and unsupervised learning techniques for clustering and classifying a dataset. To do this, we constructed a dataset having 4 classes and clustered it with different methods such as K-Means, Soft K-Means and DBScan. We also studied the effects of initialisation and hyperparameters tuning on the clustering.
+
+For classification, we used GMM and SVM and studied their behaviour in detail. In particular, we observed how they react to hyperparameter variations and how they compare to each other. This allowed us to understand how to apply these algorithms and how to obtain the best results from them.
+
+
 
 \end{document}
