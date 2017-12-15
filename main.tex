@@ -39,7 +39,8 @@
   \titlespacing\section{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
   \titlespacing\subsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
   \titlespacing\subsubsection{0pt}{0pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
-
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
 
 
@@ -184,7 +185,7 @@ For the second part of this report the same dataset was used, but some noisy dat
 \end{figure}
 
 PCA was applied to the dataset 1. Figure \ref{fig:eigenvalue_dataset1} shows the cumulative reconstruction error: it can be noticed that 73.9\% of the dataset can be reconstructed with the first 8 eigenvectors. 
-It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as could be normally expected: indeed they represent most of the variance of the data. By further studying Figure \ref{fig:eigenvector_1}, the first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 can be expected to separate well the watches class from the rest, while the second one will separate better the banana class from the rest. The two principal eigenvectors are shown in Figure \ref{fig:eigenvector_1} while the first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
+It can be seen in Figure \ref{fig:PCA_matrix} that the projection onto e1-e2 was the optimal projection for clustering purposes as could be normally expected: indeed they represent most of the variance of the data. By further studying Figure \ref{fig:eigenvector_1}, the first eigenvector corresponds to a white watch, a yellow banana and the shape of a pen in the background. On the other hand the second eigenvector shows a blue banana, a pen and a shape of a chair in the background. As such, eigenvector 1 can be expected to separate well the Watches class from the rest, while the second one will separate better the Banana class from the rest. The first 45 eigenvectors can be seen in Figure \ref{fig:eigenvectors}.
 %It can be seen in Figure \ref{fig:eigenvector_1} that the first eigenvector has a strong correlation with the watches class while it is less predominant for the other classes. On the other hand, the second eigenvector has a strong correlation with the apple class and the shape of apples and watches influences the spreads of the two classes in a similar manner. Moreover, these classes are not linearly separable in the other projections (see Figure \ref{fig:PCA_matrix}).
 
 \section{Clustering - qualitative assessment}
@@ -205,7 +206,11 @@ The hyperparameters for the K-means method are:
 \item the metric ($L_1$, $L_2$, $L_{\infty}$, $L_p$).
 \end{itemize}
 
-In Figure \ref{fig:good_kmeans}, correct results (when compared to the original labeled data) are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. 
+In Figure \ref{fig:good_kmeans}, correct results (when compared to the original labeled data) are shown for K-Means applied for K=4 and different metrics. It can be observed that the type of metric affects the shape of the borders between cluster. Indeed, $L_1$ defines distances that are the sum of the coordinates, as such the edges generated will have $n\cdot 45^{\circ}$ slopes. On the other hand, $L_2$ defines distances in the euclidian way, as such the edges generated will be straight. Finally, $L_p$ distances will generate higher parabolic functions, as the p degree of the polynomial function increases. When $p\rightarrow\infty$, $L_{\infty}$ is defined which generated similar edges as the $L_1$ metric. Indeed 
+
+\begin{equation}
+||v||_{l_\infty} = \lim_{p \rightarrow \infty }\left(\sum_{n} |v_n|^p \right)^{\frac{1}{p}}=  \argmax_{n} {|v_n|}
+\end{equation}
 
 Although all metrics were able to correctly separate the classes, some classification errors could typically be obtained, as can be seen in Figure \ref{fig:bad_kmeans}. These errors can be mainly due to the random initialisation of K-Means (see Initialization below) and the fact that the classes do not have similar distributions, which is the condition K-Mean works best for. 
 
