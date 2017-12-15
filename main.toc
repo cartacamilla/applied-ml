@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Datasets}{2}{section.2}
+\contentsline {section}{\numberline {3}Dimensionality Reduction}{3}{section.3}
+\contentsline {section}{\numberline {4}Clustering - qualitative assessment}{3}{section.4}
+\contentsline {subsection}{\numberline {4.1}K-means}{3}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Soft K-Means}{4}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}DBSCAN}{5}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Algorithms comparison}{6}{subsection.4.4}
+\contentsline {section}{\numberline {5}Classification - quantitative assessment}{6}{section.5}
+\contentsline {subsection}{\numberline {5.1}Methods comparison}{6}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}GMM classification}{6}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}C-SVM classification (linear \& RBS)}{7}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}C-SVM and GMM comparison}{8}{subsection.5.4}
+\contentsline {section}{\numberline {6}Overall discussion and conclusion}{10}{section.6}
