@@ -12,4 +12,18 @@
 \contentsline {subsection}{\numberline {5.2}GMM classification}{7}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}C-SVM classification (linear \& RBS)}{8}{subsection.5.3}
 \contentsline {subsection}{\numberline {5.4}C-SVM and GMM comparison}{9}{subsection.5.4}
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+\contentsline {subsection}{\numberline {5.2}GMM classification}{7}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}C-SVM classification (linear \& RBS)}{8}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}C-SVM and GMM comparison}{9}{subsection.5.4}
+=======
+\contentsline {subsection}{\numberline {5.2}GMM classification}{6}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}C-SVM classification (linear \& RBS)}{8}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}C-SVM and GMM comparison}{8}{subsection.5.4}
+>>>>>>> 6033763f0b30f0f73a0ac1d9687c394aaac2a99a
+>>>>>>> 02ad45a5a4dc25fcc1021ea4440658ee3ccc3833
+>>>>>>> fa8d6cfdfe66fcf1161b551327dff9ed4427c172
 \contentsline {section}{\numberline {6}Overall discussion and conclusion}{10}{section.6}
