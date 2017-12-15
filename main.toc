@@ -9,7 +9,7 @@
 \contentsline {subsection}{\numberline {4.5}Algorithms comparison}{6}{subsection.4.5}
 \contentsline {section}{\numberline {5}Classification - quantitative assessment}{6}{section.5}
 \contentsline {subsection}{\numberline {5.1}Methods comparison}{6}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}GMM classification}{6}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.2}GMM classification}{7}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}C-SVM classification (linear \& RBS)}{8}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}C-SVM and GMM comparison}{8}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.4}C-SVM and GMM comparison}{9}{subsection.5.4}
 \contentsline {section}{\numberline {6}Overall discussion and conclusion}{10}{section.6}
