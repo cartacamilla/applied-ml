@@ -284,7 +284,7 @@ Although all metrics were able to correctly separate the classes, some classific
 \end{figure}
 %End bad results
 
-Finally, K-Means behaviour was tested for different values of K (see Figure \ref{fig:kmeans_differentK}). Since clustering does not use the label of each point, the separation of datapoints is done according to the position of the points in the PCA projection. For dataset 1, the classes Chairs and Pens are quite close in the PCA projection (see Figure \ref{fig:dataset_1_labelized}). As such, when the cluster number is smaller than the total number of classes as in Figure \ref{fig:dataset_1_Kmeans-L2-3K}, the classes Chairs and Pens are left in the same cluster.
+Finally, K-Means behaviour was tested for different values of K (see Figure \ref{fig:kmeans_differentK}). Since clustering does not use the label of each point, the separation of datapoints is done according to the position of the points in the PCA projection. For dataset 1, the classes Chairs and Pens are quite close in the PCA projection (see Figure \ref{fig:dataset_1_labelized}). As such, when the cluster number is smaller than the total number of classes as in Figure \ref{fig:dataset_1_Kmeans-L2-3K}, the classes Chairs and Pens are left in the same cluster. When the cluster number is higher than the number of classes, the splits occur depending on the initialisation (see Figure \ref{fig:dataset_1_Kmeans-L2-6K}).
 
 %Different values of K
 \begin{figure}[H]
@@ -367,7 +367,7 @@ In Figure \ref{fig:soft_kmeans_varyb}, results for K=4 and different values of $
 \end{figure}
 %End different betas
 
-It can be noticed that the results for soft K-Means when varying the K don't differ considerably from what obtained with hard K-Means, as shown in Figure \ref{fig:soft_kmeans_varyk}.
+It can be noticed that the results for soft K-Means when varying the K for a fixed metric and fixed $\beta$, as shown in Figure \ref{fig:soft_kmeans_varyk}, don't differ considerably from what obtained with hard K-Means (see Figure \ref{fig:kmeans_differentK}).
 
 %different Ks
 \begin{figure}[H]
@@ -406,7 +406,7 @@ It can be noticed that the results for soft K-Means when varying the K don't dif
 
 \subsubsection*{Initialization}
 
-The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show an initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a correct clustering starting from iteration 3.
+The methods above apply a random initialisation of the cluster centers. The effect of this random procedure can be observed in Figure \ref{fig:kmeans_init}. In particular, Figures \ref{fig:K-Means-4K-beta-30-it1} to \ref{fig:K-Means-4K-beta-30-it10} show an initialization that results in an incorrect clustering, while Figures \ref{fig:K-Means-4K-beta-30-it1-2} to \ref{fig:K-Means-4K-beta-30-it6-2} show a second initialisation that results in correct clustering starting from iteration 3.
 
 %Different iterations for kmeans
 \begin{figure}[H]
@@ -414,56 +414,56 @@ The methods above apply a random initialisation of the cluster centers. The effe
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it1.png}
-      \caption{Iteration 1}
+      \caption{Init 1 - Iter 1}
       \label{fig:K-Means-4K-beta-30-it1}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it2.png}
-      \caption{Iteration 2}
+      \caption{Init 1 - Iter 2}
       \label{fig:K-Means-4K-beta-30-it2}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it3.png}
-      \caption{Iteration 3}
+      \caption{Init 1 - Iter 3}
       \label{fig:K-Means-4K-beta-30-it3}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it10.png}
-      \caption{Iteration 10}
+      \caption{Init 1 - Iter 10}
       \label{fig:K-Means-4K-beta-30-it10}
      \end{subfigure}
      ~
      \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it1(2).png}
-      \caption{Iteration 1}
+      \caption{Init 2 - Iter 1}
       \label{fig:K-Means-4K-beta-30-it1-2}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it2(2).png}
-      \caption{Iteration 2}
+      \caption{Init 2 - Iter 2}
       \label{fig:K-Means-4K-beta-30-it2-2}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it3(2).png}
-      \caption{Iteration 3}
+      \caption{Init 2 - Iter 3}
       \label{fig:K-Means-4K-beta-30-it3-2}
      \end{subfigure}
       ~
     \begin{subfigure}[t]{0.2\textwidth}
       \centering
       \includegraphics[width=\textwidth]{pictures/K-Means-4K-beta-30-it6(2).png}
-      \caption{Iteration 6}
+      \caption{Init 2 - Iter 6}
       \label{fig:K-Means-4K-beta-30-it6-2}
      \end{subfigure}
      \caption{Dataset 1 with soft K-Means clustering for K=4 and $\beta=30$, showing effects of random initialization}
@@ -517,7 +517,7 @@ It can be noticed that when the number of Minpoints increases (see Figure \ref{f
 %DBScan varying MinPts
 
 The value of $\epsilon$ was then varied for a fixed Minpt = 2, as it can be seen in Figure \ref{fig:DBScan_varyeps}.
-For smaller values of $\epsilon$ (as Figure \ref{fig:DBSCAN-Minpoint-2-epsilon005}), the size of the clusters is expectedly smaller, and as the density of the dataset is not uniform, many outliers are present. This method results in  clusters than are not necessarily globular, which is an advantage compared to K-Means for this particular dataset, but it clusters datapoints whose inter-distance is smaller than $\epsilon$. As such, in this particular case, the classes Chairs and Pens can be distinguished only for small values of $\epsilon$, which do not cluster well the other classes as their density is lower. When the value of $\epsilon$ is higher, (i.e. Figure \ref{fig:DBSCAN-Minpoint-2-epsilon02}), the classes Bananas and Watches are correctly clustered but the other two are fused togheter.
+For smaller values of $\epsilon$ (as in Figure \ref{fig:DBSCAN-Minpoint-2-epsilon005}), the size of the clusters is expectedly smaller, and as the density of the dataset is not uniform, many outliers are present. This method results in  clusters than are not necessarily globular, which is an advantage compared to K-Means for this particular dataset, but it clusters datapoints whose inter-distance is smaller than $\epsilon$. As such, in this particular case, the classes Chairs and Pens can be distinguished only for small values of $\epsilon$, which do not cluster well the other classes as their density is lower. When the value of $\epsilon$ is higher, (i.e. Figure \ref{fig:DBSCAN-Minpoint-2-epsilon02}), the classes Bananas and Watches are correctly clustered but the other two are fused togheter.
 
 %DBScan varying Eps
 \begin{figure}[H]
