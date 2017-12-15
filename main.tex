@@ -590,7 +590,7 @@ For the GMM classification, the hyperparameters to be found were:
 \end{itemize}
 
  
- Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in Section \ref{sec:classifier_robustness}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorithm to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.
+ Quantitative analysis of classification methods are done with a train/test ratio of 66\% and 30 folds for crossvalidation. Further analysis on the choice of these two parameters is made in Section \ref{sec:comparison}. Then, the hyperparameters were found in three stages. First, the K-Means initialization mode is set as it is a method expected to be more efficient than the random and uniform methods. A full covariance matrix is set to allow the algorithm to chose each element of the covariance matrix and and therefore have as much freedom as possible. In Figure \ref{fig:GMM_graph_1} it is shown that the optimal choice for the number of gaussian components in this case would be 1.
 
 
 \begin{figure}[H]
@@ -678,8 +678,9 @@ The inverse procedure was then applied, as the $C$ parameter was fixed to 1 and 
 
 
 \subsection{C-SVM and GMM comparison}
+\label{sec:comparison}
 
-The results obtained for the three models are satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, when the three models are tested in 30-fold cross-validation, the variance of the testing F-Measure is lower and its average is the highest for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
+The results obtained for the three models are satisfactory (see Figure \ref{fig:best-plots}) but the SVM method with an RBF kernel could be considered the optimal one for classifying dataset 2. Indeed, the three models were trained and tested in 30-fold cross-validation with a train/test ratio of 66\% as shown in Figure \ref{fig:F-Measure-boxes}: it can be observed that the variance of the testing F-Measure is lower and its average is the highest for the SVM method with an RBF kernel (see Figure \ref{fig:Compare-best-classification-training}). Figure \ref{fig:classification-best-RBFCSVM} shows the result of the non-linear SVM classification for the best found values of $C$ and $\sigma$. 
 
 
 \begin{figure}[H]
@@ -729,13 +730,10 @@ The results obtained for the three models are satisfactory (see Figure \ref{fig:
 \end{figure}
 
 
-Once these results obtained, as indicated in Figure \ref{fig:comparison-block-diag}, it is interesting to test each model with different train/test ratios and number of folds for the crossvalidation.\\
-
-
-\label{sec:classifier_robustness}
+Once these results obtained, following the plan indicated in Figure \ref{fig:comparison-block-diag}, it is interesting to test each model with different train/test ratios and number of folds for the crossvalidation
 
 \textbf{Train/test ratio}
-As the dataset in question is quite small, the train/test ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained and the more it will be prone to underfitting, which would cause poor performance on unseen data. This could be a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$. Figure \ref{fig:robustness-train-ratio} shows that the classifier overfits the training set with a ratio of $10\%$.
+As the dataset in question is quite small, the train/test ratio must be carefully chosen. Indeed, the lower the ratio, the less the classifier will be trained and the more it will be prone to underfitting, which would cause poor performance on unseen data. This could be a good approach for a dataset with enough datapoints. On the contrary, the higher the ratio, the more the classifier will be possibly overfitting to the training set and the variance for unseen data will be higher. A good trade-off was found to be the ratio $66\%$. Figure \ref{fig:robustness-train-ratio} shows an example of underfitting: indeed, it can be observed in Figure \ref{fig:train-test-ratio-low-10percent-train-data} that the F-Measure is very high for the training set of all methods as a good modelisation is easily obtained for a small training set. However, when applying the same model to the testing set, Figure \ref{fig:train-test-ratio-low-10percent-test-data} shows that the respective F-Measures are much lower for the testing sets. Indeed, with few data to train the dataset, the model cannot capture the underlying trend of the data, thus it will be prone to high testing errors and variance.
 
 \begin{figure}[H]
 \centering
@@ -750,7 +748,7 @@ As the dataset in question is quite small, the train/test ratio must be carefull
       \centering
       \includegraphics[height=3.2 cm]{pictures/train-test-ratio-low-10percent-test-data}
       \caption{Testing set}
-      \label{fig:train-test-ratio-low-10percent-train-data}
+      \label{fig:train-test-ratio-low-10percent-test-data}
      \end{subfigure}
 
      \caption{F-measure box-plot comparison with a train/test ratio of 10\% and 30 folds for cross validation.}
